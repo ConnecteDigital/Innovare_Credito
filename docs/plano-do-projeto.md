@@ -1,6 +1,6 @@
 # Plano do projeto — Site Innovare Soluções em Crédito
 
-Status: **rascunho para validação** com a agência/cliente.
+Status: **fase 2/3 em andamento.** Protótipo completo desenvolvido (home, consignado, 11 serviços, 5 cidades, simulador, sobre, contato, FAQ, páginas legais e SEO técnico). Pendências no README.
 
 ## 1. Leitura estratégica
 
