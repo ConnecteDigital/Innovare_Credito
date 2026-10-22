@@ -4,4 +4,5 @@ Site institucional com SEO local para a Innovare Soluções em Crédito (Jaguaqu
 
 - [Briefing consolidado](docs/briefing.md)
 - [Plano do projeto](docs/plano-do-projeto.md)
+- [Referências visuais (análise UY3 / Daycoval)](docs/referencias-visuais.md)
 - Materiais originais do cliente: `docs/referencias/`

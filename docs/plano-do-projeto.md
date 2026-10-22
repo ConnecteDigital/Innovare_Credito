@@ -44,6 +44,9 @@ Status: **rascunho para validação** com a agência/cliente.
 
 Base nas cores da marca: fundo marinho `#082343`, luz em azul `#1768B3`, energia em laranja `#F28A2B`.
 
+Referência principal aprovada pela agência: **uy3.com.br** (menu e animações). Análise técnica em
+[referencias-visuais.md](referencias-visuais.md).
+
 Ideias para discutir:
 
 1. **Hero com "rede de conexões":** partículas e linhas finas em azul que se ligam ao redor do título. Representa "conectamos você ao crédito certo" e reage ao mouse ou ao toque. Leve (canvas/WebGL simples), com fallback estático.
