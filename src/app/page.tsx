@@ -98,9 +98,22 @@ export default function Home() {
         <div className="container-site grid items-center gap-12 lg:grid-cols-[0.9fr_1.1fr] lg:gap-16">
           <div className="relative mx-auto w-full max-w-md lg:max-w-none" data-reveal>
             <div className="absolute -inset-4 rounded-[2.5rem] bg-gradient-to-br from-brand/30 via-transparent to-laranja/30 blur-2xl" />
-            <div className="relative shadow-[0_30px_80px_-30px_rgb(36_78_164/0.7)] rounded-[2rem]">
-              <Logo3D />
+            <div className="relative overflow-hidden rounded-[2rem] border border-white bg-white shadow-[0_30px_80px_-30px_rgb(36_78_164/0.55)]">
+              <Image
+                src="/images/consultor-innovare.jpg"
+                alt="Eri, da Innovare Soluções em Crédito, sorrindo, sentado em uma poltrona"
+                width={1024}
+                height={1536}
+                sizes="(min-width: 1024px) 40vw, 90vw"
+                className="aspect-[4/5] w-full object-cover object-top"
+              />
+              <div className="absolute inset-x-4 bottom-4 rounded-2xl border border-white/20 bg-marinho/80 p-4 text-white backdrop-blur-xl">
+                <p className="text-sm text-ceu">Atendimento de verdade</p>
+                <p className="font-display text-lg font-semibold">Gente da região cuidando do seu crédito</p>
+              </div>
             </div>
+            {/* logo 3D solta, girando sobre a composição */}
+            <Logo3D variante="solta" className="absolute -top-8 -right-3 z-10 w-28 sm:-right-8 sm:w-36 lg:-top-12 lg:-right-12 lg:w-44" />
           </div>
 
           <div>

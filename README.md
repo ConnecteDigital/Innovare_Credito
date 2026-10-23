@@ -10,9 +10,9 @@ Domínio: **innovarecredito.com.br**
 
 ## Stack
 
-Next.js 16 (App Router, páginas estáticas) · React 19 · TypeScript · Tailwind CSS 4.
-As animações não usam bibliotecas: Canvas 2D, CSS 3D, SVG e `IntersectionObserver`.
-Destaques: partículas que formam palavras (`ParticleField`), logo 3D arrastável (`Logo3D`) e mascote que acompanha a rolagem (`Mascote`).
+Next.js 16 (App Router, páginas estáticas) · React 19 · TypeScript · Tailwind CSS 4 · Three.js (só o mascote 3D, carregado depois da página).
+Animações: partículas que formam palavras (`ParticleField`, Canvas 2D), logo 3D arrastável em camadas CSS (`Logo3D`)
+e o mascote 3D "Mini Eri" que desce a página e anda conforme a rolagem (`Mascote` + `mascote3d/cena.ts`, Three.js).
 
 ```bash
 npm install
@@ -60,5 +60,5 @@ o schema são criados automaticamente. Não reaproveite o texto de outra cidade,
 - [ ] Mais fotos: fachada e interior da loja.
 - [ ] Revisão jurídica da política de privacidade, dos termos e do aviso legal.
 - [ ] GA4 / Google Tag Manager e Search Console (incluir aviso de cookies junto com o GA4).
-- [ ] Aprovação do Eri para o mascote "Mini Eri" (`src/components/Mascote.tsx`). Falas por seção ficam em `roteiro`, e as seções são marcadas com `data-mascote="chave"`.
+- [ ] Aprovação do Eri para o mascote 3D "Mini Eri". Falas e poses por seção: `roteiro` em `src/components/Mascote.tsx`; poses e modelo em `src/components/mascote3d/cena.ts`. Seções marcadas com `data-mascote="chave"`. Pode ser trocado depois por um modelo .glb feito por um artista 3D.
 - [ ] Link do Google Maps definitivo (`site.ts → mapa.perfilGoogle`).

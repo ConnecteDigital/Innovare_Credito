@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useRef, useState, type CSSProperties } from "react";
+import { useEffect, useId, useRef, useState, type CSSProperties } from "react";
 import { Icon } from "./Icon";
 import { NOME_PATH, NOME_VIEWBOX, SIMBOLO_PATH, SIMBOLO_VIEWBOX } from "./logo-paths";
 
@@ -17,29 +17,35 @@ import { NOME_PATH, NOME_VIEWBOX, SIMBOLO_PATH, SIMBOLO_VIEWBOX } from "./logo-p
 const CAMADAS = 22; // espessura em px
 const AUTO = 0.35; // graus por quadro no giro automático
 
-function corLateral(i: number) {
+function corLateral(i: number, solta: boolean) {
   // da frente (i alto) para trás (i baixo): azul da marca → marinho
   const t = i / (CAMADAS - 1);
-  const de = [16, 38, 86];
-  const ate = [52, 98, 206];
+  const de = solta ? [8, 24, 58] : [16, 38, 86];
+  const ate = solta ? [24, 56, 128] : [52, 98, 206];
   const c = de.map((v, k) => Math.round(v + (ate[k] - v) * t));
   return `rgb(${c[0]},${c[1]},${c[2]})`;
 }
 
-function Camada({ fill, style, className = "" }: { fill: string; style: CSSProperties; className?: string }) {
+function Camada({ fill, style, className = "", uid }: { fill: string; style: CSSProperties; className?: string; uid: string }) {
   return (
     <div className={`l3d-camada ${className}`} style={style}>
       <svg viewBox={SIMBOLO_VIEWBOX} className="h-[44%] w-auto">
-        <use href="#l3d-simbolo" fill={fill} />
+        <use href={`#${uid}-simbolo`} fill={fill} />
       </svg>
       <svg viewBox={NOME_VIEWBOX} className="mt-[7%] w-full">
-        <use href="#l3d-nome" fill={fill} />
+        <use href={`#${uid}-nome`} fill={fill} />
       </svg>
     </div>
   );
 }
 
-export function Logo3D() {
+/**
+ * `palco`: cartão escuro com pedestal holográfico.
+ * `solta`: só a logo, fundo transparente, nas cores da marca (para fundos claros).
+ */
+export function Logo3D({ variante = "palco", className = "" }: { variante?: "palco" | "solta"; className?: string }) {
+  const solta = variante === "solta";
+  const uid = useId().replace(/[^a-zA-Z0-9-]/g, "");
   const palcoRef = useRef<HTMLDivElement>(null);
   const objRef = useRef<HTMLDivElement>(null);
   const brilhoRef = useRef<SVGLinearGradientElement>(null);
@@ -141,6 +147,66 @@ export function Logo3D() {
 
   const meio = (CAMADAS - 1) / 2;
 
+  const camadas = Array.from({ length: CAMADAS }, (_, i) => {
+    const z = i - meio;
+    const frente = `url(#${uid}-brilho)`;
+    if (i === CAMADAS - 1) return <Camada key={i} uid={uid} fill={frente} className="l3d-face" style={{ transform: `translateZ(${z}px)` }} />;
+    if (i === 0) return <Camada key={i} uid={uid} fill={frente} className="l3d-face" style={{ transform: `translateZ(${z}px) rotateY(180deg)` }} />;
+    return <Camada key={i} uid={uid} fill={corLateral(i, solta)} style={{ transform: `translateZ(${z}px)` }} />;
+  });
+
+  const defs = (
+    <svg width="0" height="0" className="absolute" aria-hidden="true">
+      <defs>
+        <linearGradient id={`${uid}-brilho`} ref={brilhoRef} x1="0" x2="1" y1="0" y2="0.35">
+          {solta ? (
+            <>
+              <stop offset="0" stopColor="#2a55ad" />
+              <stop offset="0.42" stopColor="#3f74dc" />
+              <stop offset="0.5" stopColor="#f2a35a" />
+              <stop offset="0.58" stopColor="#3f74dc" />
+              <stop offset="1" stopColor="#244ea4" />
+            </>
+          ) : (
+            <>
+              <stop offset="0" stopColor="#dce8ff" />
+              <stop offset="0.42" stopColor="#ffffff" />
+              <stop offset="0.5" stopColor="#ffd2a8" />
+              <stop offset="0.58" stopColor="#ffffff" />
+              <stop offset="1" stopColor="#b9d0ff" />
+            </>
+          )}
+        </linearGradient>
+        <symbol id={`${uid}-simbolo`} viewBox={SIMBOLO_VIEWBOX}>
+          <path d={SIMBOLO_PATH} fillRule="evenodd" />
+        </symbol>
+        <symbol id={`${uid}-nome`} viewBox={NOME_VIEWBOX}>
+          <path d={NOME_PATH} fillRule="evenodd" />
+        </symbol>
+      </defs>
+    </svg>
+  );
+
+  if (solta) {
+    return (
+      <div
+        ref={palcoRef}
+        className={`l3d-palco l3d-solta aspect-square cursor-grab touch-pan-y select-none ${className || "relative"}`}
+        role="img"
+        aria-label="Logo da Innovare em 3D girando. Arraste para girar."
+      >
+        {defs}
+        <div className="absolute inset-0 [perspective:900px]">
+          <div className="l3d-flutua h-full w-full [transform-style:preserve-3d]">
+            <div ref={objRef} className="relative h-full w-full [transform-style:preserve-3d]">
+              {camadas}
+            </div>
+          </div>
+        </div>
+      </div>
+    );
+  }
+
   return (
     <div
       ref={palcoRef}
@@ -148,24 +214,7 @@ export function Logo3D() {
       role="img"
       aria-label="Logo da Innovare em 3D girando. Arraste para girar."
     >
-      {/* definições compartilhadas por todas as camadas */}
-      <svg width="0" height="0" className="absolute" aria-hidden="true">
-        <defs>
-          <linearGradient id="l3d-brilho" ref={brilhoRef} x1="0" x2="1" y1="0" y2="0.35">
-            <stop offset="0" stopColor="#dce8ff" />
-            <stop offset="0.42" stopColor="#ffffff" />
-            <stop offset="0.5" stopColor="#ffd2a8" />
-            <stop offset="0.58" stopColor="#ffffff" />
-            <stop offset="1" stopColor="#b9d0ff" />
-          </linearGradient>
-          <symbol id="l3d-simbolo" viewBox={SIMBOLO_VIEWBOX}>
-            <path d={SIMBOLO_PATH} fillRule="evenodd" />
-          </symbol>
-          <symbol id="l3d-nome" viewBox={NOME_VIEWBOX}>
-            <path d={NOME_PATH} fillRule="evenodd" />
-          </symbol>
-        </defs>
-      </svg>
+      {defs}
 
       <div className="grade-tech pointer-events-none absolute inset-0" />
       <div className="pointer-events-none absolute top-1/3 left-1/2 size-[70%] -translate-x-1/2 -translate-y-1/2 rounded-full bg-brand/40 blur-3xl" />
@@ -181,16 +230,7 @@ export function Logo3D() {
       <div className="absolute inset-x-[14%] top-[16%] bottom-[30%] [perspective:1100px]">
         <div className="l3d-flutua h-full w-full [transform-style:preserve-3d]">
           <div ref={objRef} className="relative h-full w-full [transform-style:preserve-3d]">
-            {Array.from({ length: CAMADAS }, (_, i) => {
-              const z = i - meio;
-              if (i === CAMADAS - 1) {
-                return <Camada key={i} fill="url(#l3d-brilho)" className="l3d-face" style={{ transform: `translateZ(${z}px)` }} />;
-              }
-              if (i === 0) {
-                return <Camada key={i} fill="url(#l3d-brilho)" className="l3d-face" style={{ transform: `translateZ(${z}px) rotateY(180deg)` }} />;
-              }
-              return <Camada key={i} fill={corLateral(i)} style={{ transform: `translateZ(${z}px)` }} />;
-            })}
+            {camadas}
           </div>
         </div>
       </div>
