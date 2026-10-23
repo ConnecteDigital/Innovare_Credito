@@ -51,21 +51,24 @@ export default function Home() {
         <ParticleField formas={formas} alvoId="alvo-particulas" />
 
         <div className="container-site relative grid flex-1 items-center gap-6 py-8 lg:grid-cols-[1.08fr_0.92fr] lg:gap-10 lg:py-14">
-          <div id="alvo-particulas" aria-hidden="true" className="order-first h-24 sm:h-32 lg:order-last lg:h-[320px]" />
+          <div id="alvo-particulas" aria-hidden="true" className="order-last h-24 sm:h-32 lg:h-[320px]" />
           <div>
             <span className="eyebrow"><span className="hidden sm:inline">Soluções em crédito ·</span> Jaguaquara – BA</span>
             <div className="mt-6">
               <TituloAnimado />
             </div>
-            <p className="mt-6 max-w-xl text-lg leading-relaxed text-ceu md:text-xl" data-reveal style={{ "--reveal-delay": "500ms" } as CSSProperties}>
-              Consignado INSS e servidores, portabilidade com troco, FGTS, crédito CLT e muito mais. Atendimento humanizado e
-              condições explicadas antes de você decidir.
+            <p className="mt-5 max-w-xl text-base leading-relaxed text-ceu sm:mt-6 sm:text-lg md:text-xl" data-reveal style={{ "--reveal-delay": "500ms" } as CSSProperties}>
+              <span className="sm:hidden">Consignado, FGTS, crédito CLT e mais, com tudo explicado antes de você decidir.</span>
+              <span className="hidden sm:inline">
+                Consignado INSS e servidores, portabilidade com troco, FGTS, crédito CLT e muito mais. Atendimento humanizado e
+                condições explicadas antes de você decidir.
+              </span>
             </p>
             <div className="mt-8 flex flex-col gap-3 sm:flex-row" data-reveal style={{ "--reveal-delay": "650ms" } as CSSProperties}>
               <Link href="/simulador" className="btn btn-laranja">
                 <Icon name="calculator" className="size-5" /> Simular agora
               </Link>
-              <a href={whatsappUrl()} target="_blank" rel="noopener" className="btn btn-vidro">
+              <a href={whatsappUrl()} target="_blank" rel="noopener" className="btn btn-whatsapp">
                 <Icon name="whatsapp" className="size-5" /> Falar no WhatsApp
               </a>
             </div>
@@ -127,8 +130,8 @@ export default function Home() {
             <ul className="mt-8 space-y-3">
               {servicosConsignado.map((s, i) => (
                 <li key={s.slug} data-reveal style={{ "--reveal-delay": `${i * 90}ms` } as CSSProperties}>
-                  <Link href={hrefServico(s)} className="card-claro group flex items-center gap-5 p-5">
-                    <span className="grid size-14 shrink-0 place-items-center rounded-2xl bg-gradient-to-br from-brand to-azul text-white shadow-lg">
+                  <Link href={hrefServico(s)} className="card-claro group flex items-start gap-4 p-5 sm:items-center sm:gap-5">
+                    <span className="grid size-12 shrink-0 sm:size-14 place-items-center rounded-2xl bg-gradient-to-br from-brand to-azul text-white shadow-lg">
                       <Icon name={s.icone} className="size-7" />
                     </span>
                     <span className="min-w-0">

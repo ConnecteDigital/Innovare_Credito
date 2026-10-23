@@ -441,8 +441,7 @@ html.js [data-reveal].is-in { opacity: 1; transform: none; }
 /* ============================================================
    Guia "Mini Eri" 3D (o personagem é renderizado em WebGL; aqui ficam balão, botão e notas)
    ============================================================ */
-.eri-guia { --dir: -1; --eri-energia: 0; will-change: transform; }
-@media (min-width: 768px) { .eri-guia { --dir: 1; } }
+.eri-guia { --dir: 1; will-change: transform; }
 .eri-fechar { opacity: 0; transition: opacity 0.3s; }
 .eri-guia:hover .eri-fechar,
 .eri-fechar:focus-visible { opacity: 1; }

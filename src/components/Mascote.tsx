@@ -106,7 +106,7 @@ export function Mascote() {
 
     const alvoY = () => {
       const altura = guia.offsetHeight;
-      if (window.innerWidth < 768) return window.innerHeight - altura - 8;
+      if (window.innerWidth < 768) return 84; // celular: fica no topo, logo abaixo do menu
       const max = document.documentElement.scrollHeight - window.innerHeight;
       const p = max > 0 ? Math.min(1, Math.max(0, window.scrollY / max)) : 0;
       const topo = 96;
@@ -160,7 +160,7 @@ export function Mascote() {
       const { MascoteCena } = await import("./mascote3d/cena");
       if (!ativo) return;
       try {
-        cenaRef.current = new MascoteCena(canvas, window.innerWidth < 768 ? "direita" : "esquerda");
+        cenaRef.current = new MascoteCena(canvas, "esquerda");
       } catch {
         return; // sem WebGL: não mostra o guia
       }
@@ -236,14 +236,14 @@ export function Mascote() {
   return (
     <div
       ref={guiaRef}
-      className="eri-guia pointer-events-none fixed top-0 left-0 z-40 w-[88px] md:right-1 md:left-auto md:w-[150px]"
+      className="eri-guia pointer-events-none fixed top-0 right-1 z-40 w-[84px] md:w-[150px]"
       style={{ transform: "translate3d(0,-400px,0)" }}
     >
       <div className={`relative transition-opacity duration-700 ${pronto ? "opacity-100" : "opacity-0"}`}>
         {/* balão de fala */}
         <div
           aria-hidden="true"
-          className={`absolute bottom-[78%] left-[70%] w-[8.5rem] rounded-xl border border-white/60 bg-white/95 px-2.5 py-1.5 text-[0.7rem] leading-snug font-medium text-tinta shadow-[0_10px_26px_-12px_rgb(3_15_36/0.55)] backdrop-blur transition-all duration-300 md:top-[8%] md:right-[76%] md:bottom-auto md:left-auto md:w-[10rem] md:px-3 md:py-2 md:text-[0.76rem] ${
+          className={`absolute top-[8%] right-[76%] w-[8.5rem] rounded-xl border border-white/60 bg-white/95 px-2.5 py-1.5 text-[0.7rem] leading-snug font-medium text-tinta shadow-[0_10px_26px_-12px_rgb(3_15_36/0.55)] backdrop-blur transition-all duration-300 md:w-[10rem] md:px-3 md:py-2 md:text-[0.76rem] ${
             balao ? "translate-y-0 scale-100 opacity-100" : "translate-y-2 scale-95 opacity-0"
           }`}
         >
@@ -254,7 +254,7 @@ export function Mascote() {
           type="button"
           onClick={fechar}
           aria-label="Esconder o guia"
-          className="eri-fechar pointer-events-auto absolute top-[12%] right-1 z-20 grid size-6 place-items-center rounded-full bg-marinho/90 text-xs text-white shadow md:right-3"
+          className="eri-fechar pointer-events-auto absolute top-[10%] right-1 z-20 grid size-6 place-items-center rounded-full bg-marinho/90 text-xs text-white shadow md:right-3"
         >
           ×
         </button>
