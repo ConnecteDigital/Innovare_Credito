@@ -66,6 +66,10 @@ export function Logo3D({ variante = "palco", className = "" }: { variante?: "pal
     let ultY = 0;
     let raf = 0;
     let visivel = true;
+    // variante solta: balança de um lado para o outro (sem mostrar o verso, que fica espelhado)
+    let tempo = 0;
+    let desvio = 0;
+    const LIMITE = 55;
 
     const aplicar = () => {
       obj.style.transform = `rotateX(${rx.toFixed(2)}deg) rotateY(${ry.toFixed(2)}deg)`;
@@ -83,8 +87,14 @@ export function Logo3D({ variante = "palco", className = "" }: { variante?: "pal
         vy += (AUTO - vy) * 0.02; // inércia volta ao giro automático
         rx += (alvoRx - rx) * 0.04;
         alvoRx += (8 - alvoRx) * 0.01;
+        desvio *= 0.94;
       }
-      ry += vy;
+      if (solta) {
+        tempo += 1 / 60;
+        ry = Math.max(-LIMITE, Math.min(LIMITE, Math.sin(tempo * 0.9) * 32 + desvio));
+      } else {
+        ry += vy;
+      }
       aplicar();
       raf = requestAnimationFrame(quadro);
     };
@@ -112,10 +122,11 @@ export function Logo3D({ variante = "palco", className = "" }: { variante?: "pal
       ultX = e.clientX;
       ultY = e.clientY;
       vy = dx * 0.6;
+      desvio = Math.max(-LIMITE, Math.min(LIMITE, desvio + dx * 0.6));
       rx = Math.max(-40, Math.min(40, rx - dy * 0.4));
       alvoRx = rx;
       if (reduzir) {
-        ry += vy;
+        ry = solta ? Math.max(-LIMITE, Math.min(LIMITE, ry + vy)) : ry + vy;
         aplicar();
       }
     };
@@ -143,7 +154,7 @@ export function Logo3D({ variante = "palco", className = "" }: { variante?: "pal
       palco.removeEventListener("pointerup", aoSoltar);
       palco.removeEventListener("pointercancel", aoSoltar);
     };
-  }, []);
+  }, [solta]);
 
   const meio = (CAMADAS - 1) / 2;
 

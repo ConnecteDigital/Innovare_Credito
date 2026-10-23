@@ -112,8 +112,6 @@ export default function Home() {
                 <p className="font-display text-lg font-semibold">Gente da região cuidando do seu crédito</p>
               </div>
             </div>
-            {/* logo 3D solta, girando sobre a composição */}
-            <Logo3D variante="solta" className="absolute -top-8 -right-3 z-10 w-28 sm:-right-8 sm:w-36 lg:-top-12 lg:-right-12 lg:w-44" />
           </div>
 
           <div>
@@ -152,11 +150,15 @@ export default function Home() {
       {/* ============================== PERFIL */}
       <section data-mascote="perfil" className="bg-white py-20 md:py-28">
         <div className="container-site">
-          <TituloSecao
-            eyebrow="Para você"
-            titulo="Qual é o seu perfil?"
-            texto="Escolha a opção que mais combina com você e veja as modalidades de crédito indicadas."
-          />
+          <div className="flex items-end gap-6 lg:gap-10">
+            <TituloSecao
+              eyebrow="Para você"
+              titulo="Qual é o seu perfil?"
+              texto="Escolha a opção que mais combina com você e veja as modalidades de crédito indicadas."
+            />
+            {/* logo 3D pequena, balançando (sem virar de costas) */}
+            <Logo3D variante="solta" className="relative hidden w-24 shrink-0 sm:block lg:w-28" />
+          </div>
           <div className="mt-12">
             <SeletorPerfil />
           </div>
