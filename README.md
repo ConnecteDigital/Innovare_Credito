@@ -52,7 +52,7 @@ o schema são criados automaticamente. Não reaproveite o texto de outra cidade,
 ## Pendências (provisórios no site)
 
 - [ ] **Logo oficial em vetor.** A atual foi vetorizada a partir de um JPG (`public/brand/`).
-- [ ] **Região:** o briefing diz "Vale do Jequitinhonha", mas Jaguaquara fica no **Vale do Jiquiriçá**. O site usa Jiquiriçá (`site.ts → regiao`). Confirmar.
+- [x] **Região:** Vale do Jiquiriçá (confirmado pela agência).
 - [ ] Taxas e prazos reais do simulador (`simulador.ts`, `provisorio: true`).
 - [ ] Bancos e promotoras parceiros (`parceiros.ts`, `provisorio: true`).
 - [ ] CEP, horário de funcionamento, Instagram e Facebook (`site.ts`).

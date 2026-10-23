@@ -34,8 +34,7 @@ export const site = {
     instagram: "",
     facebook: "",
   },
-  // ATENÇÃO: a agência escreveu "Vale do Jequitinhonha", mas essa região fica em Minas Gerais.
-  // Jaguaquara pertence ao Território de Identidade do Vale do Jiquiriçá (BA). Confirmar com o cliente.
+  // Jaguaquara pertence ao Território de Identidade do Vale do Jiquiriçá (BA). Confirmado pela agência.
   regiao: "Vale do Jiquiriçá",
   atendimento: {
     presencial: "Atendimento presencial em Jaguaquara e em todo o Vale do Jiquiriçá",
