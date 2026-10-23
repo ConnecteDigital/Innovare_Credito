@@ -3,6 +3,7 @@ import Link from "next/link";
 import type { CSSProperties } from "react";
 import { Esteira } from "@/components/Esteira";
 import { Icon } from "@/components/Icon";
+import { Logo3D } from "@/components/Logo3D";
 import { MapaLocal } from "@/components/MapaLocal";
 import { Parceiros } from "@/components/Parceiros";
 import { ParticleField, type Forma } from "@/components/ParticleField";
@@ -45,7 +46,7 @@ export default function Home() {
   return (
     <>
       {/* ============================== HERO */}
-      <section className="superficie-noite relative isolate flex min-h-[100svh] flex-col overflow-hidden pt-24 md:pt-28">
+      <section data-mascote="inicio" className="superficie-noite relative isolate flex min-h-[100svh] flex-col overflow-hidden pt-24 md:pt-28">
         <div className="grade-tech pointer-events-none absolute inset-0" />
         <ParticleField formas={formas} alvoId="alvo-particulas" />
 
@@ -93,23 +94,12 @@ export default function Home() {
       </section>
 
       {/* ============================== CONSIGNADO EM DESTAQUE */}
-      <section className="py-20 md:py-28">
+      <section data-mascote="consignado" className="py-20 md:py-28">
         <div className="container-site grid items-center gap-12 lg:grid-cols-[0.9fr_1.1fr] lg:gap-16">
           <div className="relative mx-auto w-full max-w-md lg:max-w-none" data-reveal>
             <div className="absolute -inset-4 rounded-[2.5rem] bg-gradient-to-br from-brand/30 via-transparent to-laranja/30 blur-2xl" />
-            <div className="relative overflow-hidden rounded-[2rem] border border-white bg-white shadow-[0_30px_80px_-30px_rgb(36_78_164/0.55)]">
-              <Image
-                src="/images/consultor-innovare.jpg"
-                alt="Consultor de crédito da Innovare sorrindo, sentado em uma poltrona"
-                width={1024}
-                height={1536}
-                sizes="(min-width: 1024px) 40vw, 90vw"
-                className="aspect-[4/5] w-full object-cover object-top"
-              />
-              <div className="absolute inset-x-4 bottom-4 rounded-2xl border border-white/20 bg-marinho/80 p-4 text-white backdrop-blur-xl">
-                <p className="text-sm text-ceu">Atendimento de verdade</p>
-                <p className="font-display text-lg font-semibold">Gente da região cuidando do seu crédito</p>
-              </div>
+            <div className="relative shadow-[0_30px_80px_-30px_rgb(36_78_164/0.7)] rounded-[2rem]">
+              <Logo3D />
             </div>
           </div>
 
@@ -147,7 +137,7 @@ export default function Home() {
       </section>
 
       {/* ============================== PERFIL */}
-      <section className="bg-white py-20 md:py-28">
+      <section data-mascote="perfil" className="bg-white py-20 md:py-28">
         <div className="container-site">
           <TituloSecao
             eyebrow="Para você"
@@ -161,7 +151,7 @@ export default function Home() {
       </section>
 
       {/* ============================== SERVIÇOS */}
-      <section className="py-20 md:py-28">
+      <section data-mascote="servicos" className="py-20 md:py-28">
         <div className="container-site">
           <div className="flex flex-col justify-between gap-6 md:flex-row md:items-end">
             <TituloSecao
@@ -191,11 +181,11 @@ export default function Home() {
             titulo="Do primeiro contato ao dinheiro na conta, sem complicação"
             texto="Um caminho simples, com a nossa equipe ao seu lado em cada etapa."
           />
-          <div className="mt-12">
+          <div className="mt-12" data-mascote="como-funciona">
             <Esteira etapas={etapasAtendimento} />
           </div>
 
-          <div id="simulador" className="mt-24 scroll-mt-28">
+          <div id="simulador" data-mascote="simulador" className="mt-24 scroll-mt-28">
             <TituloSecao
               tom="escuro"
               eyebrow="Simulador"
@@ -214,7 +204,7 @@ export default function Home() {
       </section>
 
       {/* ============================== SOBRE */}
-      <section className="bg-white py-20 md:py-28">
+      <section data-mascote="sobre" className="bg-white py-20 md:py-28">
         <div className="container-site grid items-center gap-12 lg:grid-cols-2 lg:gap-16">
           <div>
             <TituloSecao eyebrow="Quem somos" titulo="Crédito com atendimento próximo" texto={institucional.quemSomos} />
@@ -259,7 +249,7 @@ export default function Home() {
       </section>
 
       {/* ============================== ONDE ATENDEMOS */}
-      <section className="py-20 md:py-28">
+      <section data-mascote="cidades" className="py-20 md:py-28">
         <div className="container-site grid items-start gap-12 lg:grid-cols-[1fr_1.1fr]">
           <div>
             <TituloSecao
@@ -299,7 +289,7 @@ export default function Home() {
       </section>
 
       {/* ============================== FAQ */}
-      <section className="py-20 md:py-28">
+      <section data-mascote="faq" className="py-20 md:py-28">
         <div className="container-site grid gap-12 lg:grid-cols-[0.8fr_1.2fr]">
           <TituloSecao
             eyebrow="Dúvidas"

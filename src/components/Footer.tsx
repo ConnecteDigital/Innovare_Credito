@@ -8,7 +8,7 @@ import { whatsappUrl } from "@/lib/whatsapp";
 
 export function Footer() {
   return (
-    <footer className="superficie-noite relative overflow-hidden pt-20 pb-10">
+    <footer data-mascote="rodape" className="superficie-noite relative overflow-hidden pt-20 pb-10">
       <div className="grade-tech pointer-events-none absolute inset-0 opacity-50" />
       <div className="container-site relative">
         <div className="grid gap-12 lg:grid-cols-[1.3fr_1fr_1fr_1fr]">

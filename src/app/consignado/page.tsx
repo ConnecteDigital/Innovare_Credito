@@ -142,7 +142,7 @@ export default function ConsignadoPage() {
           <div className="mt-10">
             <Esteira etapas={etapasAtendimento} />
           </div>
-          <div id="simulador" className="mt-20 scroll-mt-28">
+          <div id="simulador" data-mascote="simulador" className="mt-20 scroll-mt-28">
             <TituloSecao tom="escuro" eyebrow="Simulador" titulo="Simule seu consignado" />
             <div className="mt-8" data-reveal>
               <Simulador modalidadeInicial="inss" />

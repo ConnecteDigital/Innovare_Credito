@@ -378,6 +378,167 @@ html.js [data-reveal].is-in { opacity: 1; transform: none; }
   }
 }
 
+/* ============================================================
+   Logo 3D (camadas empilhadas) + pedestal holográfico
+   ============================================================ */
+.l3d-palco.arrastando { cursor: grabbing; }
+.l3d-camada {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+.l3d-face {
+  backface-visibility: hidden;
+  -webkit-backface-visibility: hidden;
+  filter: drop-shadow(0 0 18px rgb(91 155 255 / 0.35));
+}
+.l3d-flutua { animation: l3d-flutua 6s ease-in-out infinite; }
+@keyframes l3d-flutua {
+  0%, 100% { transform: translateY(-6px); }
+  50% { transform: translateY(8px); }
+}
+.l3d-pedestal {
+  aspect-ratio: 1;
+  perspective: 700px;
+}
+.l3d-anel {
+  position: absolute;
+  inset: 0;
+  border-radius: 999px;
+}
+.l3d-anel-1 {
+  border: 2px dashed rgb(91 155 255 / 0.55);
+  box-shadow: 0 0 40px rgb(91 155 255 / 0.25), inset 0 0 40px rgb(91 155 255 / 0.2);
+  animation: l3d-anel 18s linear infinite;
+}
+.l3d-anel-2 {
+  inset: 16%;
+  border: 1.5px solid rgb(242 138 43 / 0.55);
+  border-left-color: transparent;
+  border-right-color: transparent;
+  animation: l3d-anel 9s linear infinite reverse;
+}
+@keyframes l3d-anel {
+  from { transform: rotateX(76deg) rotateZ(0deg); }
+  to { transform: rotateX(76deg) rotateZ(360deg); }
+}
+.l3d-sombra {
+  position: absolute;
+  left: 22%;
+  right: 22%;
+  top: 44%;
+  height: 12%;
+  border-radius: 50%;
+  background: radial-gradient(closest-side, rgb(0 0 0 / 0.55), transparent);
+  transform: scaleX(var(--l3d-sombra, 1));
+  filter: blur(4px);
+}
+
+/* ============================================================
+   Mascote "Mini Eri"
+   (transform-origin em unidades do viewBox 0 0 120 200)
+   ============================================================ */
+.mascote { --dir: -1; }
+@media (min-width: 768px) { .mascote { --dir: 1; } }
+@media (max-width: 767px) { .mascote-vira { transform: scaleX(-1); } }
+.mascote-fechar { opacity: 0; transition: opacity 0.3s; }
+.mascote:hover .mascote-fechar,
+.mascote-fechar:focus-visible { opacity: 1; }
+@media (hover: none) { .mascote-fechar { opacity: 0.85; } }
+
+.mascote-corpo { animation: mascote-pula 0.55s var(--ease-suave); filter: drop-shadow(0 10px 14px rgb(3 15 36 / 0.25)); }
+@keyframes mascote-pula {
+  0% { transform: translateY(0); }
+  35% { transform: translateY(-14px); }
+  65% { transform: translateY(2px); }
+  100% { transform: translateY(0); }
+}
+.mascote .tronco { animation: mascote-respira 3.2s ease-in-out infinite; }
+@keyframes mascote-respira {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(1.2px); }
+}
+.mascote .braco { transition: transform 0.5s var(--ease-suave); }
+.mascote .braco-frente { transform-origin: 38px 94px; }
+.mascote .braco-tras { transform-origin: 82px 94px; }
+.mascote .cabeca { transform-origin: 60px 80px; transition: transform 0.5s var(--ease-suave); }
+.mascote .perna-e { transform-origin: 52px 128px; }
+.mascote .perna-d { transform-origin: 68px 128px; }
+.mascote .dedo,
+.mascote .polegar,
+.mascote .celular { opacity: 0; transition: opacity 0.3s; }
+.mascote .olhos { transform-origin: 60px 55px; animation: mascote-pisca 4.6s infinite; }
+@keyframes mascote-pisca {
+  0%, 92%, 100% { transform: scaleY(1); }
+  95% { transform: scaleY(0.1); }
+}
+
+/* andando enquanto a página rola */
+.mascote[data-andando="1"] .perna-e { animation: mascote-passo 0.42s ease-in-out infinite alternate; }
+.mascote[data-andando="1"] .perna-d { animation: mascote-passo 0.42s ease-in-out infinite alternate-reverse; }
+.mascote[data-andando="1"] .tronco { animation: mascote-balanca 0.42s ease-in-out infinite alternate; }
+@keyframes mascote-passo {
+  from { transform: rotate(16deg); }
+  to { transform: rotate(-16deg); }
+}
+@keyframes mascote-balanca {
+  from { transform: translateY(0) rotate(-1.5deg); }
+  to { transform: translateY(-2.5px) rotate(1.5deg); }
+}
+
+/* poses */
+.mascote[data-pose="acena"] .braco-tras { animation: mascote-aceno 1.1s ease-in-out infinite; }
+@keyframes mascote-aceno {
+  0%, 100% { transform: rotate(-148deg); }
+  50% { transform: rotate(-176deg); }
+}
+.mascote[data-pose="aponta"] .braco-frente { transform: rotate(96deg); }
+.mascote[data-pose="aponta"] .dedo { opacity: 1; }
+.mascote[data-pose="aponta"] .cabeca { transform: rotate(-5deg); }
+.mascote[data-pose="joinha"] .braco-tras { transform: rotate(-142deg); }
+.mascote[data-pose="joinha"] .polegar { opacity: 1; }
+.mascote[data-pose="dinheiro"] .braco-frente { transform: rotate(150deg); }
+.mascote[data-pose="dinheiro"] .braco-tras { transform: rotate(-150deg); }
+.mascote[data-pose="dinheiro"] .tronco { animation: mascote-festa 0.5s ease-in-out infinite alternate; }
+@keyframes mascote-festa {
+  from { transform: translateY(0); }
+  to { transform: translateY(-4px); }
+}
+.mascote[data-pose="celular"] .braco-tras { transform: rotate(-128deg); }
+.mascote[data-pose="celular"] .celular { opacity: 1; }
+.mascote[data-pose="celular"] .cabeca { transform: rotate(6deg); }
+.mascote[data-pose="pensando"] .braco-tras { transform: rotate(-24deg); }
+.mascote[data-pose="pensando"] .cabeca { transform: rotate(-9deg); }
+
+/* notas de dinheiro */
+.mascote-nota {
+  position: absolute;
+  left: 0;
+  top: 0;
+  display: grid;
+  place-items: center;
+  width: 28px;
+  height: 15px;
+  border-radius: 2px;
+  background: linear-gradient(135deg, #4fc36c, #2f9a4f);
+  border: 1px solid #23803f;
+  color: #eaffef;
+  font: 700 8px/1 var(--font-sans);
+  box-shadow: 0 2px 6px rgb(0 0 0 / 0.2);
+  opacity: 0;
+  animation: mascote-nota 1.6s cubic-bezier(0.2, 0.7, 0.4, 1) forwards;
+}
+@keyframes mascote-nota {
+  0% { opacity: 0; transform: translate(-50%, 0) rotate(0deg) scale(0.5); }
+  12% { opacity: 1; }
+  45% { transform: translate(calc(-50% + var(--dx) * 0.6 * var(--dir)), var(--dy)) rotate(calc(var(--rot) * 0.5)) scale(1); }
+  80% { opacity: 1; }
+  100% { opacity: 0; transform: translate(calc(-50% + var(--dx) * var(--dir)), calc(var(--dy) + 130px)) rotate(var(--rot)) scale(0.9); }
+}
+
 /* Pulso do botão flutuante do WhatsApp */
 @keyframes pulso {
   0% { box-shadow: 0 0 0 0 rgb(31 174 91 / 0.55); }

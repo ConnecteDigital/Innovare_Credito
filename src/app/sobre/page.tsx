@@ -68,6 +68,32 @@ export default function SobrePage() {
         </div>
       </section>
 
+      <section className="bg-white py-16 md:py-24">
+        <div className="container-site grid items-center gap-12 lg:grid-cols-[0.8fr_1.2fr]">
+          <div className="relative mx-auto w-full max-w-sm" data-reveal>
+            <div className="absolute -inset-4 rounded-[2.5rem] bg-gradient-to-br from-brand/30 via-transparent to-laranja/30 blur-2xl" />
+            <Image
+              src="/images/consultor-innovare.jpg"
+              alt={`${site.responsavel}, responsável pela Innovare Soluções em Crédito`}
+              width={1024}
+              height={1536}
+              sizes="(min-width: 1024px) 30vw, 80vw"
+              className="relative aspect-[4/5] w-full rounded-[2rem] border border-white object-cover object-top shadow-[0_30px_80px_-30px_rgb(36_78_164/0.55)]"
+            />
+          </div>
+          <div>
+            <TituloSecao
+              eyebrow="Quem cuida do seu crédito"
+              titulo={site.responsavel}
+              texto="À frente da Innovare, Eri e a equipe atendem cada cliente com escuta, paciência e transparência: entender o momento de cada pessoa antes de apresentar qualquer proposta."
+            />
+            <p className="mt-6 text-sm font-semibold tracking-[0.12em] text-ardosia uppercase" data-reveal>
+              Responsável · {site.nome}
+            </p>
+          </div>
+        </div>
+      </section>
+
       <section className="superficie-noite relative overflow-hidden py-16 md:py-24">
         <div className="grade-tech pointer-events-none absolute inset-0" />
         <LogoSimbolo className="pointer-events-none absolute -right-20 -bottom-24 h-[28rem] w-auto text-white/[0.04]" />

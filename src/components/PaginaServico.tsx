@@ -109,7 +109,7 @@ export function PaginaServico({ s }: { s: Servico }) {
           </div>
         )}
         {s.modalidadeSimulador && (
-          <div id="simulador" className="container-site relative mt-20 scroll-mt-28">
+          <div id="simulador" data-mascote="simulador" className="container-site relative mt-20 scroll-mt-28">
             <TituloSecao tom="escuro" eyebrow="Simulador" titulo="Faça uma simulação" />
             <div className="mt-8" data-reveal>
               <Simulador modalidadeInicial={s.modalidadeSimulador} />

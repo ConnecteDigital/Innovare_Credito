@@ -11,7 +11,8 @@ Domínio: **innovarecredito.com.br**
 ## Stack
 
 Next.js 16 (App Router, páginas estáticas) · React 19 · TypeScript · Tailwind CSS 4.
-As animações não usam bibliotecas: Canvas 2D, CSS e `IntersectionObserver`.
+As animações não usam bibliotecas: Canvas 2D, CSS 3D, SVG e `IntersectionObserver`.
+Destaques: partículas que formam palavras (`ParticleField`), logo 3D arrastável (`Logo3D`) e mascote que acompanha a rolagem (`Mascote`).
 
 ```bash
 npm install
@@ -59,3 +60,5 @@ o schema são criados automaticamente. Não reaproveite o texto de outra cidade,
 - [ ] Mais fotos: fachada e interior da loja.
 - [ ] Revisão jurídica da política de privacidade, dos termos e do aviso legal.
 - [ ] GA4 / Google Tag Manager e Search Console (incluir aviso de cookies junto com o GA4).
+- [ ] Aprovação do Eri para o mascote "Mini Eri" (`src/components/Mascote.tsx`). Falas por seção ficam em `roteiro`, e as seções são marcadas com `data-mascote="chave"`.
+- [ ] Link do Google Maps definitivo (`site.ts → mapa.perfilGoogle`).

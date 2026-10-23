@@ -47,7 +47,7 @@ export default function SimuladorPage() {
         }
         texto="Escolha seu perfil, quanto precisa e em quantas parcelas. A estimativa aparece na hora, e você pode enviar a simulação para a nossa equipe pelo WhatsApp."
       >
-        <div className="mt-12" data-reveal>
+        <div className="mt-12" data-reveal data-mascote="simulador">
           <Simulador />
         </div>
       </PageHero>

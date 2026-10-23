@@ -17,7 +17,7 @@ export function PageHero({
   children?: ReactNode;
 }) {
   return (
-    <section className="superficie-noite relative overflow-hidden pt-32 pb-16 md:pt-40 md:pb-24">
+    <section data-mascote="pagina" className="superficie-noite relative overflow-hidden pt-32 pb-16 md:pt-40 md:pb-24">
       <div className="grade-tech pointer-events-none absolute inset-0" />
       <ParticleField densidade={0.6} />
       <div className="container-site relative">

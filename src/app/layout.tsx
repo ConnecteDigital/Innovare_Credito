@@ -4,6 +4,7 @@ import "./globals.css";
 import { Efeitos } from "@/components/Efeitos";
 import { Footer } from "@/components/Footer";
 import { Header } from "@/components/Header";
+import { Mascote } from "@/components/Mascote";
 import { WhatsAppFlutuante } from "@/components/WhatsAppFlutuante";
 import { JsonLd } from "@/components/ui";
 import { site } from "@/content/site";
@@ -53,6 +54,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
         <main id="conteudo">{children}</main>
         <Footer />
         <WhatsAppFlutuante />
+        <Mascote />
         <Efeitos />
         <JsonLd data={organizationJsonLd()} />
       </body>

@@ -80,7 +80,7 @@ export function ListaFaq({ itens, tom = "claro" }: { itens: Faq[]; tom?: "claro"
 
 export function FaixaCta({ titulo, texto, mensagem }: { titulo?: string; texto?: string; mensagem?: string }) {
   return (
-    <section className="py-16 md:py-24">
+    <section data-mascote="cta" className="py-16 md:py-24">
       <div className="container-site">
         <div
           data-reveal
