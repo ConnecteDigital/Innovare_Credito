@@ -45,8 +45,8 @@ export default async function CidadePage({ params }: { params: Promise<{ slug: s
           <a href={whatsappUrl(mensagemServico("as opções de crédito", local))} target="_blank" rel="noopener" className="btn btn-laranja">
             <Icon name="whatsapp" className="size-5" /> Falar no WhatsApp
           </a>
-          <Link href="/simulador" className="btn btn-vidro">
-            <Icon name="calculator" className="size-5" /> Simular
+          <Link href="/servicos" className="btn btn-vidro">
+            Ver serviços <Icon name="arrow" className="size-5" />
           </Link>
         </div>
       </PageHero>

@@ -68,4 +68,4 @@ export const institucional = {
 };
 
 export const avisoLegal =
-  "A Innovare Soluções em Crédito atua na orientação e intermediação de operações de crédito junto a instituições financeiras parceiras. Não somos instituição financeira e não concedemos crédito diretamente. Todas as operações estão sujeitas à análise de crédito e às condições de cada instituição. Taxas, prazos e o Custo Efetivo Total (CET) são informados antes da contratação. Crédito para beneficiários do Bolsa Família é uma contratação independente do benefício.";
+  "A Innovare Soluções em Crédito é correspondente bancário e atua na orientação e intermediação de operações de crédito junto a instituições financeiras parceiras, seguindo as diretrizes do Banco Central do Brasil (BACEN). Não somos instituição financeira e não concedemos crédito diretamente. Todas as operações estão sujeitas à análise de crédito e às condições de cada instituição. Taxas, prazos e o Custo Efetivo Total (CET) são informados antes da contratação. Crédito para beneficiários do Bolsa Família é uma contratação independente do benefício.";

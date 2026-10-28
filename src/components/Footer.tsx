@@ -78,7 +78,6 @@ export function Footer() {
             <ul className="mt-5 space-y-2.5 text-[0.95rem]">
               {[
                 ["/sobre", "Sobre a Innovare"],
-                ["/simulador", "Simulador"],
                 ["/faq", "Perguntas frequentes"],
                 ["/contato", "Contato"],
                 ["/politica-de-privacidade", "Política de privacidade"],

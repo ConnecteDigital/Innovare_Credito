@@ -1,13 +1,16 @@
-// PROVISÓRIO: a agência ainda não recebeu a lista de bancos/promotoras parceiros.
-// Quando chegar, substituir os itens abaixo (nome + logo em /public/parceiros) e mudar `provisorio` para false.
+// Instituições parceiras informadas pela cliente (Obs_Site.docx).
+// Para exibir logos, salve os arquivos em /public/parceiros e preencha `logo`.
 
 export const parceiros = {
-  provisorio: true,
   itens: [
-    { nome: "Instituição parceira 1", logo: null },
-    { nome: "Instituição parceira 2", logo: null },
-    { nome: "Instituição parceira 3", logo: null },
-    { nome: "Instituição parceira 4", logo: null },
-    { nome: "Instituição parceira 5", logo: null },
+    { nome: "Itaú", logo: null },
+    { nome: "C6 Bank", logo: null },
+    { nome: "BRB", logo: null },
+    { nome: "Facta", logo: null },
+    { nome: "Banco do Brasil", logo: null },
+    { nome: "Rodobens Consórcios", logo: null },
+    { nome: "BMG", logo: null },
+    { nome: "PAN", logo: null },
+    { nome: "iCred", logo: null },
   ] as { nome: string; logo: string | null }[],
 };

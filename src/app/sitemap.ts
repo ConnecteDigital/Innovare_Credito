@@ -9,7 +9,6 @@ export default function sitemap(): MetadataRoute.Sitemap {
     ["/", 1],
     ["/consignado", 0.9],
     ["/servicos", 0.8],
-    ["/simulador", 0.8],
     ["/cidades", 0.7],
     ["/sobre", 0.6],
     ["/contato", 0.6],

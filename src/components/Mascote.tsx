@@ -16,11 +16,10 @@ import type { MascoteCena, Pose } from "./mascote3d/cena";
 
 const roteiro: Record<string, { pose: Pose; fala: string; dinheiro?: boolean }> = {
   inicio: { pose: "acena", fala: "Oi! Eu sou o Eri. Vem comigo conhecer a Innovare!" },
-  consignado: { pose: "aponta", fala: "Aposentado ou servidor? O consignado tem as melhores condições!" },
+  consignado: { pose: "aponta", fala: "Aposentado ou servidor? Dá pra fazer tudo online!" },
   perfil: { pose: "aponta", fala: "Escolha o seu perfil e veja as opções certas pra você." },
-  servicos: { pose: "joinha", fala: "Tem opção pra CLT, autônomo, Bolsa Família e muito mais." },
+  servicos: { pose: "comemora", fala: "Tem opção pra CLT, autônomo, Bolsa Família e muito mais!", dinheiro: true },
   "como-funciona": { pose: "aponta", fala: "É simples: conversa, análise, proposta explicada e pronto!" },
-  simulador: { pose: "comemora", fala: "Simula aí e veja quanto fica a parcela!", dinheiro: true },
   sobre: { pose: "acena", fala: "Essa é a nossa equipe, pronta pra te atender." },
   cidades: { pose: "aponta", fala: "Estamos no Centro de Jaguaquara. Passa lá!" },
   faq: { pose: "pensa", fala: "Ficou com alguma dúvida? As respostas estão aqui." },

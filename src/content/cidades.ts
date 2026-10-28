@@ -59,11 +59,11 @@ export const cidades: Cidade[] = [
     intro:
       "Para quem mora ou trabalha no Entroncamento de Jaguaquara, a Innovare está perto: a nossa loja fica no Centro de Jaguaquara, e todo o atendimento também pode ser feito pelo WhatsApp, sem precisar sair de casa.",
     paragrafos: [
-      "Muita gente da região do Entroncamento trabalha com comércio, transporte e serviços. Por isso, além do consignado para aposentados, pensionistas e servidores, temos opções como crédito pessoal para autônomos, empréstimo com garantia de veículo, antecipação do FGTS e maquininhas Ton para quem vende.",
+      "Muita gente da região do Entroncamento trabalha com comércio, transporte e serviços. Por isso, além do consignado para aposentados, pensionistas e servidores, temos opções como crédito pessoal, empréstimo com garantia de veículo, antecipação do FGTS e o Microcrédito Itaú para quem tem o próprio negócio.",
       "Começando pelo WhatsApp, você envia as informações iniciais, recebe as opções explicadas com clareza e, se quiser, finaliza o atendimento na loja.",
     ],
     atendimento: "Atendimento pelo WhatsApp e presencial na loja do Centro de Jaguaquara.",
-    destaques: ["credito-pessoal", "emprestimo-garantia-veiculo", "clt-e-fgts", "maquininhas-ton"],
+    destaques: ["credito-pessoal", "microcredito-itau", "emprestimo-garantia-veiculo", "clt-e-fgts"],
     faq: [
       {
         pergunta: "Consigo resolver tudo sem ir até o Centro?",
@@ -129,7 +129,7 @@ export const cidades: Cidade[] = [
       "Jequié é a maior cidade da nossa região, e a Innovare atende moradores de lá com a mesma proximidade de sempre: pelo WhatsApp, com respostas rápidas, ou presencialmente na nossa loja em Jaguaquara.",
     paragrafos: [
       "Jequié reúne muitos servidores públicos municipais e estaduais, além de aposentados e pensionistas do INSS. Para esses públicos, o consignado e a portabilidade com troco costumam oferecer as melhores condições, e explicamos cada detalhe antes da contratação.",
-      "Também atendemos trabalhadores CLT, autônomos e comerciantes de Jequié com antecipação do FGTS, crédito pessoal, empréstimo com garantia de veículo e maquininhas Ton.",
+      "Também atendemos trabalhadores CLT, autônomos e comerciantes de Jequié com antecipação do FGTS, crédito pessoal e empréstimo com garantia de veículo.",
     ],
     atendimento: "Atendimento pelo WhatsApp e presencial na nossa loja em Jaguaquara.",
     destaques: ["servidores-publicos", "inss", "portabilidade-refinanciamento", "emprestimo-garantia-veiculo"],

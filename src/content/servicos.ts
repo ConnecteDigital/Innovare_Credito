@@ -1,8 +1,19 @@
 import type { IconName } from "@/components/Icon";
+import {
+  faqCltFgts,
+  faqInss,
+  faqMicrocredito,
+  faqPortabilidade,
+  faqServidores,
+  notaInss,
+  notaPortabilidade,
+  type Faq,
+  type FaqGrupo,
+} from "./faqs";
+
+export type { Faq, FaqGrupo };
 
 export type PerfilId = "aposentado" | "servidor" | "clt" | "autonomo" | "bolsa-familia" | "empreendedor";
-
-export type Faq = { pergunta: string; resposta: string };
 
 export type Servico = {
   slug: string;
@@ -20,9 +31,20 @@ export type Servico = {
   vantagens: { titulo: string; texto: string }[];
   documentos: string[];
   atencao?: string;
-  faq: Faq[];
+  /** parágrafos de apresentação exibidos logo abaixo do topo */
+  paragrafos?: string[];
+  /** blocos extras de informação (ex.: "O veículo precisa estar quitado?") */
+  infos?: { titulo: string; texto: string }[];
+  /** FAQ simples (uma lista) ou agrupado por tema */
+  faq?: Faq[];
+  faqGrupos?: FaqGrupo[];
+  /** frase de destaque ao fim do FAQ */
+  faqNota?: string;
+  /** mostra o aviso "tudo pode ser feito online, atendemos todo o Brasil" */
+  online?: boolean;
+  /** oferecido apenas no atendimento regional */
+  regional?: boolean;
   perfis: PerfilId[];
-  modalidadeSimulador?: string;
 };
 
 export const perfis: { id: PerfilId; titulo: string; descricao: string; icone: IconName }[] = [
@@ -61,7 +83,7 @@ export const servicos: Servico[] = [
       "Beneficiários do BPC/LOAS, conforme as condições disponíveis",
     ],
     comoFunciona: [
-      "Você fala com a nossa equipe pelo WhatsApp ou vem até a loja em Jaguaquara.",
+      "Você fala com a nossa equipe pelo WhatsApp, de qualquer lugar do Brasil, ou vem até a loja em Jaguaquara.",
       "Consultamos a margem consignável disponível no seu benefício.",
       "Apresentamos as opções, explicando parcela, prazo, taxa e custo total.",
       "Com a sua aprovação, a proposta segue para a instituição financeira.",
@@ -70,27 +92,13 @@ export const servicos: Servico[] = [
     vantagens: [
       { titulo: "Taxas reguladas", texto: "O consignado INSS tem teto de juros definido pelas regras do benefício." },
       { titulo: "Sem boleto", texto: "A parcela é descontada no benefício, sem risco de esquecer o pagamento." },
-      { titulo: "Atendimento presencial", texto: "Você pode resolver tudo na nossa loja, com calma e sem pressa." },
+      { titulo: "Online ou presencial", texto: "Faça tudo pelo WhatsApp, de qualquer lugar do Brasil, ou venha à nossa loja." },
     ],
     documentos: [...docsBasicos, "Extrato ou número do benefício", "Dados da conta onde recebe o benefício"],
-    faq: [
-      {
-        pergunta: "Quanto posso pegar no consignado INSS?",
-        resposta:
-          "O valor depende da sua margem consignável, a parte do benefício que pode ser comprometida com parcelas, definida em lei. Consultamos a sua margem e mostramos as opções disponíveis.",
-      },
-      {
-        pergunta: "Beneficiário do BPC/LOAS pode fazer consignado?",
-        resposta: "Sim, conforme as regras e condições disponíveis no momento. Nossa equipe verifica o seu caso.",
-      },
-      {
-        pergunta: "Preciso ir até a loja?",
-        resposta:
-          "Não é obrigatório. Você pode começar pelo WhatsApp e, se preferir, finalizar o atendimento na nossa loja na Rua Avelar, nº 14, Centro de Jaguaquara.",
-      },
-    ],
+    faqGrupos: faqInss,
+    faqNota: notaInss,
+    online: true,
     perfis: ["aposentado"],
-    modalidadeSimulador: "inss",
   },
   {
     slug: "servidores-publicos",
@@ -123,19 +131,9 @@ export const servicos: Servico[] = [
       { titulo: "Orientação próxima", texto: "Explicamos cada condição antes de você decidir." },
     ],
     documentos: [...docsBasicos, "Último contracheque", "Dados bancários"],
-    faq: [
-      {
-        pergunta: "Minha prefeitura tem convênio?",
-        resposta:
-          "Os convênios variam por órgão e por instituição financeira. Fale com a nossa equipe informando onde você trabalha e verificamos as opções.",
-      },
-      {
-        pergunta: "Posso fazer portabilidade do meu consignado de servidor?",
-        resposta: "Sim. Veja a nossa página de portabilidade e refinanciamento para entender como funciona.",
-      },
-    ],
+    faqGrupos: faqServidores,
+    online: true,
     perfis: ["servidor"],
-    modalidadeSimulador: "servidor",
   },
   {
     slug: "portabilidade-refinanciamento",
@@ -167,18 +165,9 @@ export const servicos: Servico[] = [
       { titulo: "Decisão consciente", texto: "Você só segue em frente se a nova condição fizer sentido." },
     ],
     documentos: [...docsBasicos, "Extrato do benefício ou contracheque", "Informações dos contratos atuais"],
-    faq: [
-      {
-        pergunta: "O que é o troco do refinanciamento?",
-        resposta:
-          "É o valor liberado quando o novo contrato é maior que o saldo devedor do contrato antigo. A disponibilidade e o valor dependem da análise.",
-      },
-      {
-        pergunta: "A portabilidade sempre vale a pena?",
-        resposta:
-          "Nem sempre. Por isso mostramos a comparação completa (parcela, prazo e custo total) antes de qualquer decisão.",
-      },
-    ],
+    faqGrupos: faqPortabilidade,
+    faqNota: notaPortabilidade,
+    online: true,
     perfis: ["aposentado", "servidor"],
   },
 
@@ -212,57 +201,11 @@ export const servicos: Servico[] = [
       { titulo: "FGTS sem parcela mensal", texto: "Na antecipação, os valores são descontados do saldo do FGTS." },
       { titulo: "Explicação completa", texto: "Mostramos também as regras e limitações de cada modalidade." },
     ],
-    documentos: [...docsBasicos, "Carteira de trabalho (pode ser a digital)", "Acesso ao aplicativo FGTS, no caso da antecipação"],
+    documentos: [...docsBasicos, "Carteira de trabalho (pode ser a digital)", "Liberação de consulta ao saldo FGTS, no caso da antecipação"],
     atencao:
       "Ao aderir ao saque-aniversário, em caso de demissão sem justa causa você recebe apenas a multa rescisória, não o saldo total do FGTS, e há prazo de carência para voltar ao saque-rescisão. Explicamos essas regras antes da contratação.",
-    faq: [
-      {
-        pergunta: "Preciso ter saldo no FGTS para antecipar?",
-        resposta: "Sim. O valor antecipado depende do saldo disponível e das regras da modalidade.",
-      },
-      {
-        pergunta: "Qual é melhor: crédito CLT ou antecipação do FGTS?",
-        resposta:
-          "Depende do seu objetivo e do seu orçamento. Na conversa, comparamos as duas opções com números reais do seu caso.",
-      },
-    ],
+    faqGrupos: faqCltFgts,
     perfis: ["clt"],
-    modalidadeSimulador: "clt",
-  },
-  {
-    slug: "emprestimo-cartao-de-credito",
-    grupo: "servicos",
-    titulo: "Empréstimo no Cartão de Crédito",
-    tituloCurto: "Empréstimo no cartão",
-    icone: "card",
-    resumo: "Transforme o limite disponível do seu cartão de crédito em dinheiro via Pix e pague parcelado na fatura.",
-    metaTitle: "Empréstimo no Cartão de Crédito via Pix – Jaguaquara",
-    metaDescription:
-      "Use o limite do cartão de crédito para receber dinheiro via Pix e pagar parcelado na fatura. Atendimento em Jaguaquara – BA e por WhatsApp.",
-    h1: "Empréstimo no cartão de crédito: limite que vira dinheiro via Pix",
-    intro:
-      "Tem limite disponível no cartão de crédito? Ele pode virar dinheiro na sua conta via Pix, com pagamento parcelado na fatura. É uma alternativa para quem precisa de agilidade e não tem acesso ao consignado. Mostramos o valor das parcelas e o custo total antes de você confirmar.",
-    publico: ["Quem tem cartão de crédito com limite disponível", "Autônomos, CLT, aposentados e outros perfis"],
-    comoFunciona: [
-      "Você informa quanto precisa e o limite disponível.",
-      "Simulamos as parcelas e o custo total.",
-      "Com a sua confirmação, a operação é feita no cartão.",
-      "O valor cai na sua conta via Pix.",
-    ],
-    vantagens: [
-      { titulo: "Agilidade", texto: "Processo rápido e direto, com pouca burocracia." },
-      { titulo: "Sem consulta à margem", texto: "Usa o limite que você já tem no cartão." },
-      { titulo: "Transparência", texto: "Custo total informado antes de confirmar." },
-    ],
-    documentos: [...docsBasicos, "Cartão de crédito do titular"],
-    faq: [
-      {
-        pergunta: "O valor compromete o limite do cartão?",
-        resposta: "Sim. O valor contratado e os encargos ocupam o limite e são cobrados nas próximas faturas.",
-      },
-    ],
-    perfis: ["autonomo", "clt", "aposentado", "servidor", "empreendedor"],
-    modalidadeSimulador: "cartao",
   },
   {
     slug: "credito-conta-de-energia",
@@ -297,40 +240,52 @@ export const servicos: Servico[] = [
       },
     ],
     perfis: ["autonomo", "bolsa-familia", "clt"],
-    modalidadeSimulador: "energia",
   },
   {
     slug: "credito-bolsa-familia",
     grupo: "servicos",
-    titulo: "Crédito para Beneficiários do Bolsa Família",
+    titulo: "Crédito para quem recebe Bolsa Família",
     tituloCurto: "Bolsa Família",
     icone: "family",
-    resumo: "Opções de crédito para quem recebe o Bolsa Família. A contratação é independente do benefício.",
+    resumo: "Recebe Bolsa Família e precisa de crédito? Consulte as opções para o seu perfil. A contratação é independente do benefício.",
     metaTitle: "Crédito para quem recebe Bolsa Família – Jaguaquara",
     metaDescription:
-      "Opções de crédito para beneficiários do Bolsa Família, com contratação independente do benefício. Orientação clara e atendimento humanizado em Jaguaquara – BA.",
-    h1: "Crédito para beneficiários do Bolsa Família",
+      "Recebe Bolsa Família e precisa de crédito? Consulte opções para o seu perfil, com simulação sem compromisso. A contratação é independente do benefício.",
+    h1: "Recebe Bolsa Família e precisa de crédito? Conheça as possibilidades com a Innovare!",
     intro:
-      "Quem recebe o Bolsa Família também pode ter acesso a opções de crédito. Importante: a contratação é independente do benefício, que não é usado como garantia nem sofre descontos. Apresentamos as alternativas disponíveis para o seu perfil com toda a clareza.",
-    publico: ["Beneficiários do Bolsa Família maiores de 18 anos"],
+      "Quem recebe o Bolsa Família pode consultar opções de crédito de acordo com seu perfil e com os critérios da instituição financeira. Nossa equipe oferece atendimento personalizado para verificar as alternativas disponíveis e explicar cada etapa da contratação.",
+    paragrafos: [
+      "O crédito pode ajudar a lidar com um imprevisto, realizar um projeto ou investir em uma atividade que gere renda, sempre avaliando se as parcelas cabem no seu orçamento.",
+      "Receber o benefício não garante aprovação de crédito. Cada solicitação passa pela análise da instituição financeira.",
+    ],
+    publico: ["Beneficiários do Bolsa Família maiores de 18 anos", "Conforme os critérios de cada instituição financeira"],
     comoFunciona: [
       "Você fala com a nossa equipe pelo WhatsApp ou na loja.",
-      "Avaliamos quais opções estão disponíveis para o seu perfil.",
-      "Explicamos parcela, prazo e custo total.",
-      "Com a sua aprovação, encaminhamos a proposta.",
+      "Consultamos as opções disponíveis para o seu perfil.",
+      "Fazemos uma simulação sem compromisso, com valor liberado, parcelas, prazo, juros e CET.",
+      "Explicamos a forma de pagamento antes de qualquer decisão.",
+      "Com a sua aprovação, encaminhamos a proposta para análise.",
     ],
     vantagens: [
-      { titulo: "Benefício preservado", texto: "O Bolsa Família não é descontado nem usado como garantia." },
-      { titulo: "Orientação responsável", texto: "Ajudamos a avaliar se a parcela cabe no seu orçamento." },
-      { titulo: "Atendimento acolhedor", texto: "Sem julgamentos, com escuta e respeito." },
+      { titulo: "Opções para o seu perfil", texto: "Consulta das alternativas disponíveis para você." },
+      { titulo: "Simulação sem compromisso", texto: "Você conhece a proposta antes de decidir." },
+      { titulo: "Informações claras", texto: "Valor liberado, parcelas, prazo, juros e Custo Efetivo Total (CET)." },
     ],
     documentos: [...docsBasicos],
     atencao:
-      "Crédito para beneficiários do Bolsa Família é uma contratação independente do benefício. O benefício não é consignado, não é usado como garantia e não sofre descontos.",
+      "A contratação é independente do Bolsa Família: nas opções aqui apresentadas, o benefício não é usado como garantia e as parcelas não são descontadas dele. A forma de pagamento será explicada antes de qualquer decisão.",
     faq: [
       {
         pergunta: "O valor das parcelas é descontado do Bolsa Família?",
-        resposta: "Não. A contratação é independente do benefício, que não sofre nenhum desconto.",
+        resposta: "Não. Nas opções apresentadas pela Innovare, o benefício não é usado como garantia e as parcelas não são descontadas dele.",
+      },
+      {
+        pergunta: "Receber o Bolsa Família garante a aprovação?",
+        resposta: "Não. Cada solicitação passa pela análise da instituição financeira, conforme os critérios dela.",
+      },
+      {
+        pergunta: "Como vou pagar as parcelas?",
+        resposta: "A forma de pagamento depende da opção escolhida e é explicada antes de qualquer decisão.",
       },
     ],
     perfis: ["bolsa-familia"],
@@ -341,34 +296,77 @@ export const servicos: Servico[] = [
     titulo: "Crédito Pessoal",
     tituloCurto: "Crédito pessoal",
     icone: "user",
-    resumo: "Opções de crédito para autônomos, comerciantes e outros públicos, conforme análise.",
-    metaTitle: "Crédito Pessoal para Autônomos e Comerciantes – Jaguaquara",
+    resumo: "Opções de crédito pessoal para organizar as contas ou realizar seus planos, conforme análise de cada instituição.",
+    metaTitle: "Crédito Pessoal em Jaguaquara – BA",
     metaDescription:
-      "Crédito pessoal para autônomos, comerciantes e outros públicos, conforme análise. Atendimento presencial em Jaguaquara e por WhatsApp em todo o Brasil.",
-    h1: "Crédito pessoal para autônomos, comerciantes e outros públicos",
+      "Crédito pessoal para organizar as contas, lidar com imprevistos ou realizar seus planos. Simulação sem compromisso e transparência em cada etapa.",
+    h1: "Crédito pessoal",
     intro:
-      "Nem todo mundo tem acesso ao consignado, e é aí que o crédito pessoal entra. Trabalhamos com opções para autônomos, comerciantes e outros perfis, sempre conforme análise. Explicamos tudo antes da contratação, para você decidir com tranquilidade.",
-    publico: ["Autônomos", "Comerciantes", "Profissionais liberais", "Outros perfis, conforme análise"],
+      "Precisa de dinheiro para organizar as contas ou realizar seus planos? A Innovare pode ajudar! Trabalhamos com opções de crédito pessoal, conforme análise e critérios de cada instituição financeira, para você avaliar possibilidades de acordo com suas necessidades.",
+    paragrafos: [
+      "Seja para lidar com um imprevisto, realizar um projeto ou reorganizar sua vida financeira, nossa equipe oferece atendimento personalizado e ajuda você a entender as condições disponíveis.",
+      "Na Innovare, você conta com simulação sem compromisso e transparência em cada etapa.",
+    ],
+    publico: ["Quem precisa organizar as contas", "Quem quer realizar um projeto", "Quem precisa lidar com um imprevisto", "Conforme análise de cada instituição"],
     comoFunciona: [
-      "Você conta quanto precisa e qual é a sua renda.",
+      "Você conta quanto precisa e para quê.",
       "Buscamos as opções disponíveis para o seu perfil.",
-      "Apresentamos parcela, prazo, taxa e custo total.",
+      "Fazemos uma simulação sem compromisso com parcela, prazo, taxa e custo total.",
       "Você aprova e encaminhamos a proposta.",
     ],
     vantagens: [
-      { titulo: "Para vários perfis", texto: "Opções para quem não tem vínculo formal." },
-      { titulo: "Uso livre", texto: "Use o dinheiro como precisar: contas, reforma, negócio." },
-      { titulo: "Clareza", texto: "Comparação simples entre as opções." },
+      { titulo: "Atendimento personalizado", texto: "Ajudamos você a entender as condições disponíveis." },
+      { titulo: "Simulação sem compromisso", texto: "Você conhece a proposta antes de decidir." },
+      { titulo: "Transparência", texto: "Clareza em cada etapa da contratação." },
     ],
     documentos: [...docsBasicos, "Comprovante de renda, quando houver"],
     faq: [
+      {
+        pergunta: "Para que posso usar o crédito pessoal?",
+        resposta: "Para o que você precisar: organizar as contas, lidar com um imprevisto ou realizar um projeto.",
+      },
       {
         pergunta: "Autônomo sem comprovante de renda consegue crédito?",
         resposta: "Depende da análise de cada instituição. Fale com a nossa equipe para verificarmos as opções do seu caso.",
       },
     ],
+    perfis: ["autonomo", "clt", "empreendedor"],
+  },
+  {
+    slug: "microcredito-itau",
+    grupo: "servicos",
+    titulo: "Microcrédito Itaú",
+    tituloCurto: "Microcrédito Itaú",
+    icone: "store",
+    resumo: "Microcrédito para comerciantes e prestadores de serviço, de R$ 400 a R$ 21.000 em até 15x, sem necessidade de CNPJ. Atendimento regional.",
+    metaTitle: "Microcrédito Itaú em Jaguaquara – BA",
+    metaDescription:
+      "Microcrédito Itaú para comerciantes e prestadores de serviço: R$ 400 a R$ 21.000 em até 15x, sem necessidade de CNPJ. Correspondente autorizado Itaú em Jaguaquara.",
+    h1: "Microcrédito Itaú para impulsionar seu negócio!",
+    intro:
+      "Quem empreende sabe: investir na hora certa pode fazer a diferença. Seja para comprar mercadorias, renovar equipamentos ou reforçar o capital de giro, conheça as possibilidades do Microcrédito Itaú.",
+    paragrafos: [
+      "Na Innovare Soluções em Crédito, somos especialistas em crédito e atuamos como correspondente autorizado do Banco Itaú, oferecendo orientação e acompanhamento durante a solicitação.",
+      "Nossa equipe ajuda você a conhecer as condições disponíveis, com explicações claras sobre valores, parcelas, prazos, taxas e Custo Efetivo Total (CET) antes da contratação.",
+    ],
+    publico: ["Comerciantes", "Prestadores de serviços", "Sem necessidade de CNPJ"],
+    comoFunciona: [
+      "Você fala com a nossa equipe pelo WhatsApp ou na loja em Jaguaquara.",
+      "Entendemos o seu negócio e quanto você precisa.",
+      "Apresentamos valores, parcelas, prazos, taxas e CET.",
+      "Encaminhamos a solicitação ao Itaú e acompanhamos a análise.",
+    ],
+    vantagens: [
+      { titulo: "Sem necessidade de CNPJ", texto: "Para comerciantes e prestadores de serviço." },
+      { titulo: "R$ 400 a R$ 21.000", texto: "Valores para mercadorias, equipamentos ou capital de giro." },
+      { titulo: "Prazos até 15x", texto: "Parcelas planejadas para o seu negócio." },
+    ],
+    documentos: [...docsBasicos, "Informações sobre a sua atividade"],
+    atencao:
+      "Disponível apenas no atendimento regional da Innovare (Jaguaquara e região). Crédito sujeito à análise e aprovação do Banco Itaú; a Innovare atua como correspondente autorizado.",
+    faqGrupos: faqMicrocredito,
+    regional: true,
     perfis: ["autonomo", "empreendedor"],
-    modalidadeSimulador: "pessoal",
   },
   {
     slug: "emprestimo-garantia-veiculo",
@@ -376,34 +374,55 @@ export const servicos: Servico[] = [
     titulo: "Empréstimo com Garantia de Veículo",
     tituloCurto: "Garantia de veículo",
     icone: "car",
-    resumo: "Crédito usando o seu carro ou moto como garantia, com prazos maiores. O veículo continua com você.",
+    resumo: "Seu carro ou moto como garantia, com possibilidade de valores maiores, prazos mais longos e juros menores. O veículo continua com você.",
     metaTitle: "Empréstimo com Garantia de Veículo – Carro ou Moto",
     metaDescription:
-      "Crédito com garantia de veículo: use seu carro ou moto como garantia e continue usando normalmente. Atendimento em Jaguaquara – BA e região.",
-    h1: "Empréstimo com garantia de veículo",
+      "Use seu carro ou moto como garantia e tenha acesso a valores maiores, prazos mais longos e juros menores, conforme análise. Você continua usando o veículo.",
+    h1: "Seu veículo pode ajudar você a realizar planos, organizar as finanças ou investir no seu negócio!",
     intro:
-      "Com o seu carro ou moto como garantia, é possível acessar valores maiores e prazos mais longos, e você continua usando o veículo normalmente. Explicamos como funciona a garantia, os custos e os prazos antes da contratação.",
-    publico: ["Proprietários de carro ou moto quitado ou em condições aceitas pela instituição"],
+      "Nessa modalidade, seu carro ou moto é oferecido como garantia do empréstimo. Isso pode permitir valores maiores, prazos mais longos e juros menores em comparação ao crédito pessoal sem garantia, conforme a análise e as condições da instituição financeira.",
+    paragrafos: [
+      "Você continua usando o veículo normalmente, desde que cumpra as condições do contrato. Durante a operação, ele fica vinculado ao banco por meio de alienação fiduciária até a quitação da dívida.",
+      "Na Innovare, você recebe orientação para entender a proposta e avaliar se essa modalidade atende às suas necessidades.",
+    ],
+    publico: ["Proprietários de carro ou moto", "Veículos aceitos conforme a instituição financeira"],
     comoFunciona: [
-      "Você informa os dados do veículo.",
-      "Verificamos as condições e o valor possível.",
-      "Apresentamos parcela, prazo e custo total.",
-      "Após a aprovação, o valor é liberado e o veículo fica como garantia até a quitação.",
+      "Avaliação do veículo: são analisados o valor de mercado, o ano, o estado de conservação e a documentação. A aceitação de carros e motos depende da instituição.",
+      "Análise da proposta: o valor disponível depende da avaliação do veículo, do seu perfil e da capacidade de pagamento.",
+      "Condições claras: antes de contratar, você conhece o valor líquido a receber, as parcelas, o prazo, os juros, eventuais despesas de avaliação e registro e o Custo Efetivo Total (CET).",
+      "Liberação do crédito: acontece após a aprovação e a conclusão das etapas de documentação e registro da garantia.",
     ],
     vantagens: [
-      { titulo: "Valores maiores", texto: "A garantia permite acessar valores mais altos." },
-      { titulo: "Prazos longos", texto: "Parcelas mais leves para o seu orçamento." },
-      { titulo: "Veículo com você", texto: "Você continua usando o carro ou a moto." },
+      { titulo: "Valores maiores", texto: "A garantia pode permitir acessar valores mais altos." },
+      { titulo: "Prazos e juros", texto: "Prazos mais longos e juros menores que no crédito sem garantia, conforme análise." },
+      { titulo: "Veículo com você", texto: "Você continua usando o carro ou a moto normalmente." },
     ],
     documentos: [...docsBasicos, "Documento do veículo (CRLV)", "Comprovante de renda"],
+    infos: [
+      {
+        titulo: "O veículo precisa estar quitado?",
+        texto:
+          "Isso depende do banco. Algumas instituições aceitam veículos financiados e utilizam parte do crédito para quitar o saldo existente. Nesse caso, o valor restante é disponibilizado ao cliente.",
+      },
+    ],
+    atencao:
+      "Atenção à garantia: em caso de inadimplência, o veículo pode ser retomado e vendido para pagamento da dívida, conforme o contrato e os procedimentos legais. Por isso, é essencial escolher uma parcela que caiba no seu orçamento.",
     faq: [
       {
         pergunta: "Posso continuar usando o carro?",
-        resposta: "Sim. O veículo fica como garantia (alienação fiduciária) até a quitação, mas continua com você.",
+        resposta: "Sim, desde que cumpra as condições do contrato. O veículo fica vinculado ao banco por alienação fiduciária até a quitação.",
+      },
+      {
+        pergunta: "O veículo precisa estar quitado?",
+        resposta:
+          "Depende do banco. Algumas instituições aceitam veículos financiados e usam parte do crédito para quitar o saldo existente.",
+      },
+      {
+        pergunta: "Existem custos além dos juros?",
+        resposta: "Pode haver despesas de avaliação e registro da garantia. Todas aparecem na proposta e no CET antes da contratação.",
       },
     ],
     perfis: ["autonomo", "empreendedor", "clt", "servidor"],
-    modalidadeSimulador: "veiculo",
   },
   {
     slug: "consorcios-cartas-de-credito",
@@ -439,39 +458,6 @@ export const servicos: Servico[] = [
     ],
     perfis: ["empreendedor", "clt", "servidor", "autonomo"],
   },
-  {
-    slug: "maquininhas-ton",
-    grupo: "servicos",
-    titulo: "Maquininhas Ton",
-    tituloCurto: "Maquininhas Ton",
-    icone: "pos",
-    resumo: "Soluções para receber suas vendas no cartão com as maquininhas Ton.",
-    metaTitle: "Maquininha de Cartão Ton em Jaguaquara – BA",
-    metaDescription:
-      "Maquininhas Ton para receber vendas no cartão de crédito, débito e Pix. Atendimento e orientação para o seu negócio em Jaguaquara e região.",
-    h1: "Maquininhas Ton para receber suas vendas no cartão",
-    intro:
-      "Para quem vende, aceitar cartão é essencial. Oferecemos as maquininhas Ton e ajudamos você a escolher o modelo e o plano mais adequados ao volume de vendas do seu negócio.",
-    publico: ["Comerciantes", "Autônomos e prestadores de serviço", "Pequenos negócios"],
-    comoFunciona: [
-      "Você conta como vende hoje e quanto fatura.",
-      "Indicamos o modelo e o plano mais adequados.",
-      "Ajudamos no pedido e na ativação.",
-    ],
-    vantagens: [
-      { titulo: "Venda mais", texto: "Aceite crédito, débito e Pix." },
-      { titulo: "Orientação local", texto: "Ajuda presencial para configurar e começar a vender." },
-      { titulo: "Plano adequado", texto: "Escolha conforme o volume de vendas." },
-    ],
-    documentos: [...docsBasicos, "CNPJ ou CPF para cadastro"],
-    faq: [
-      {
-        pergunta: "Preciso ter CNPJ?",
-        resposta: "Não necessariamente. É possível se cadastrar com CPF, conforme as regras da Ton.",
-      },
-    ],
-    perfis: ["empreendedor", "autonomo"],
-  },
 ];
 
 export const servicosConsignado = servicos.filter((s) => s.grupo === "consignado");
@@ -483,4 +469,13 @@ export function hrefServico(s: Pick<Servico, "slug" | "grupo">) {
 
 export function getServico(grupo: Servico["grupo"], slug: string) {
   return servicos.find((s) => s.grupo === grupo && s.slug === slug);
+}
+
+/** FAQ do serviço sempre em grupos (o FAQ simples vira um grupo sem título). */
+export function gruposFaq(s: Pick<Servico, "faq" | "faqGrupos">): FaqGrupo[] {
+  return s.faqGrupos ?? [{ titulo: "", itens: s.faq ?? [] }];
+}
+
+export function todasFaq(s: Pick<Servico, "faq" | "faqGrupos">): Faq[] {
+  return gruposFaq(s).flatMap((g) => g.itens);
 }

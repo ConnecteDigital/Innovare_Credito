@@ -2,10 +2,9 @@ import Link from "next/link";
 import type { CSSProperties } from "react";
 import { Icon } from "./Icon";
 import { PageHero } from "./PageHero";
-import { Simulador } from "./Simulador";
-import { CardServico, FaixaCta, JsonLd, ListaFaq, TituloSecao } from "./ui";
+import { CardServico, FaixaCta, GruposFaq, JsonLd, TituloSecao } from "./ui";
 import { cidades } from "@/content/cidades";
-import { hrefServico, servicos, type Servico } from "@/content/servicos";
+import { gruposFaq, hrefServico, servicos, todasFaq, type Servico } from "@/content/servicos";
 import { breadcrumbJsonLd, faqJsonLd, serviceJsonLd } from "@/lib/seo";
 import { mensagemServico, whatsappUrl } from "@/lib/whatsapp";
 
@@ -32,13 +31,47 @@ export function PaginaServico({ s }: { s: Servico }) {
           <a href={whatsappUrl(mensagemServico(s.titulo))} target="_blank" rel="noopener" className="btn btn-laranja">
             <Icon name="whatsapp" className="size-5" /> Quero saber mais
           </a>
-          {s.modalidadeSimulador && (
-            <a href="#simulador" className="btn btn-vidro">
-              <Icon name="calculator" className="size-5" /> Simular agora
-            </a>
-          )}
+          <a href="#duvidas" className="btn btn-vidro">
+            Tirar dúvidas <Icon name="arrow" className="size-5 rotate-90" />
+          </a>
         </div>
+        {s.regional && (
+          <p className="mt-6 inline-flex items-center gap-2 rounded-full border border-laranja/50 bg-laranja/10 px-4 py-2 text-sm font-medium text-laranja-300">
+            <Icon name="pin" className="size-4" /> Disponível apenas no atendimento regional (Jaguaquara e região)
+          </p>
+        )}
       </PageHero>
+
+      {(s.paragrafos?.length || s.online) && (
+        <section className="bg-white py-12 md:py-16">
+          <div className={`container-site grid items-start gap-8 ${s.paragrafos?.length ? "lg:grid-cols-[1.3fr_1fr]" : ""}`}>
+            {s.paragrafos?.length ? (
+              <div className="prosa text-lg" data-reveal>
+                {s.paragrafos.map((p) => (
+                  <p key={p}>{p}</p>
+                ))}
+              </div>
+            ) : null}
+            {s.online && (
+              <div className="superficie-noite relative overflow-hidden rounded-[1.75rem] p-6" data-reveal>
+                <div className="grade-tech pointer-events-none absolute inset-0 opacity-60" />
+                <div className="relative flex items-start gap-4">
+                  <span className="grid size-12 shrink-0 place-items-center rounded-2xl bg-laranja text-white">
+                    <Icon name="whatsapp" />
+                  </span>
+                  <div>
+                    <h2 className="text-xl font-semibold text-white">Tudo pode ser feito online</h2>
+                    <p className="mt-1.5 leading-relaxed text-ceu">
+                      Atendemos todo o Brasil. Do primeiro contato à contratação, você resolve pelo WhatsApp, sem sair de casa. Se
+                      preferir, também atendemos na nossa loja em Jaguaquara.
+                    </p>
+                  </div>
+                </div>
+              </div>
+            )}
+          </div>
+        </section>
+      )}
 
       <section className="py-16 md:py-24">
         <div className="container-site grid gap-6 lg:grid-cols-3">
@@ -108,19 +141,19 @@ export function PaginaServico({ s }: { s: Servico }) {
             </div>
           </div>
         )}
-        {s.modalidadeSimulador && (
-          <div id="simulador" data-mascote="simulador" className="container-site relative mt-20 scroll-mt-28">
-            <TituloSecao tom="escuro" eyebrow="Simulador" titulo="Faça uma simulação" />
-            <div className="mt-8" data-reveal>
-              <Simulador modalidadeInicial={s.modalidadeSimulador} />
+        {s.infos?.map((info) => (
+          <div key={info.titulo} className="container-site relative mt-6" data-reveal>
+            <div className="card-luz p-5">
+              <h3 className="text-lg font-semibold text-white">{info.titulo}</h3>
+              <p className="mt-1.5 leading-relaxed text-ceu">{info.texto}</p>
             </div>
           </div>
-        )}
+        ))}
       </section>
 
-      <section className="py-16 md:py-24">
-        <div className="container-site grid gap-12 lg:grid-cols-[0.8fr_1.2fr]">
-          <div>
+      <section id="duvidas" className="scroll-mt-24 py-16 md:py-24">
+        <div className="container-site grid items-start gap-12 lg:grid-cols-[0.8fr_1.2fr]">
+          <div className="lg:sticky lg:top-28">
             <TituloSecao eyebrow="Dúvidas" titulo={`Dúvidas sobre ${s.tituloCurto}`} />
             <div className="mt-8 rounded-2xl border border-tinta/8 bg-white p-5" data-reveal>
               <p className="font-semibold text-tinta">Atendemos em</p>
@@ -132,11 +165,13 @@ export function PaginaServico({ s }: { s: Servico }) {
                     </Link>
                   </li>
                 ))}
-                <li className="inline-block rounded-full bg-brand/8 px-3 py-1.5 text-sm font-medium text-brand">e em todo o Brasil</li>
+                {!s.regional && (
+                  <li className="inline-block rounded-full bg-brand/8 px-3 py-1.5 text-sm font-medium text-brand">e em todo o Brasil</li>
+                )}
               </ul>
             </div>
           </div>
-          <ListaFaq itens={s.faq} />
+          <GruposFaq grupos={gruposFaq(s)} nota={s.faqNota} />
         </div>
       </section>
 
@@ -159,7 +194,7 @@ export function PaginaServico({ s }: { s: Servico }) {
         data={[
           serviceJsonLd({ name: s.titulo, description: s.metaDescription, path }),
           breadcrumbJsonLd(migalhas),
-          faqJsonLd(s.faq),
+          faqJsonLd(todasFaq(s)),
         ]}
       />
     </>

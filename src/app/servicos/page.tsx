@@ -8,7 +8,7 @@ import { breadcrumbJsonLd, pageMetadata } from "@/lib/seo";
 export const metadata = pageMetadata({
   title: "Serviços de Crédito: Consignado, FGTS, CLT, Pessoal e Mais",
   description:
-    "Conheça todos os serviços da Innovare: consignado INSS e servidores, portabilidade, FGTS, crédito CLT, crédito pessoal, cartão, conta de energia, garantia de veículo, consórcios e maquininhas Ton.",
+    "Conheça todos os serviços da Innovare: consignado INSS e servidores, portabilidade, FGTS, crédito CLT, crédito pessoal, Microcrédito Itaú, conta de energia, garantia de veículo e consórcios.",
   path: "/servicos",
 });
 
@@ -24,7 +24,7 @@ export default function ServicosPage() {
         migalhas={migalhas}
         eyebrow="Serviços"
         titulo="Soluções em crédito para cada momento da sua vida"
-        texto="Do consignado ao crédito pessoal, de consórcios a maquininhas para o seu negócio: conectamos você à opção mais adequada ao seu perfil."
+        texto="Do consignado ao crédito pessoal, de consórcios ao microcrédito para o seu negócio: conectamos você à opção mais adequada ao seu perfil."
       />
 
       <section className="py-16 md:py-24">

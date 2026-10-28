@@ -11,7 +11,6 @@ import { whatsappUrl } from "@/lib/whatsapp";
 const links = [
   { href: "/consignado", label: "Consignado" },
   { href: "/servicos", label: "Serviços", mega: true },
-  { href: "/simulador", label: "Simulador" },
   { href: "/cidades", label: "Cidades" },
   { href: "/sobre", label: "Sobre" },
   { href: "/contato", label: "Contato" },

@@ -4,7 +4,6 @@ import type { CSSProperties } from "react";
 import { Esteira } from "@/components/Esteira";
 import { Icon } from "@/components/Icon";
 import { PageHero } from "@/components/PageHero";
-import { Simulador } from "@/components/Simulador";
 import { FaixaCta, JsonLd, ListaFaq, TituloSecao } from "@/components/ui";
 import { etapasAtendimento } from "@/content/etapas";
 import { hrefServico, servicosConsignado } from "@/content/servicos";
@@ -39,7 +38,11 @@ const faq = [
     resposta:
       "Se ainda houver margem disponível, sim. Também é possível fazer portabilidade ou refinanciamento com troco, conforme análise.",
   },
-  ...servicosConsignado.flatMap((s) => s.faq.slice(0, 1)),
+  {
+    pergunta: "Posso fazer tudo online?",
+    resposta:
+      "Sim. Atendemos todo o Brasil: do primeiro contato à contratação, tudo pode ser feito pelo WhatsApp. Se preferir, também atendemos na nossa loja em Jaguaquara.",
+  },
 ];
 
 export default function ConsignadoPage() {
@@ -59,10 +62,13 @@ export default function ConsignadoPage() {
           <a href={whatsappUrl(mensagemServico("empréstimo consignado"))} target="_blank" rel="noopener" className="btn btn-laranja">
             <Icon name="whatsapp" className="size-5" /> Consultar minha margem
           </a>
-          <a href="#simulador" className="btn btn-vidro">
-            <Icon name="calculator" className="size-5" /> Simular consignado
+          <a href="#duvidas" className="btn btn-vidro">
+            Tirar dúvidas <Icon name="arrow" className="size-5 rotate-90" />
           </a>
         </div>
+        <p className="mt-6 inline-flex items-center gap-2 rounded-full border border-white/15 bg-white/5 px-4 py-2 text-sm text-white">
+          <Icon name="whatsapp" className="size-4 text-laranja-300" /> Tudo pode ser feito online. Atendemos todo o Brasil.
+        </p>
       </PageHero>
 
       <section className="py-16 md:py-24">
@@ -142,18 +148,26 @@ export default function ConsignadoPage() {
           <div className="mt-10">
             <Esteira etapas={etapasAtendimento} />
           </div>
-          <div id="simulador" data-mascote="simulador" className="mt-20 scroll-mt-28">
-            <TituloSecao tom="escuro" eyebrow="Simulador" titulo="Simule seu consignado" />
-            <div className="mt-8" data-reveal>
-              <Simulador modalidadeInicial="inss" />
-            </div>
-          </div>
         </div>
       </section>
 
-      <section className="py-16 md:py-24">
-        <div className="container-site grid gap-12 lg:grid-cols-[0.8fr_1.2fr]">
-          <TituloSecao eyebrow="Dúvidas" titulo="Perguntas sobre consignado" />
+      <section id="duvidas" className="scroll-mt-24 py-16 md:py-24">
+        <div className="container-site grid items-start gap-12 lg:grid-cols-[0.8fr_1.2fr]">
+          <div>
+            <TituloSecao eyebrow="Dúvidas" titulo="Perguntas sobre consignado" />
+            <p className="mt-6 text-sm font-semibold text-ardosia" data-reveal>
+              Perguntas completas de cada modalidade:
+            </p>
+            <ul className="mt-3 space-y-2" data-reveal>
+              {servicosConsignado.map((s) => (
+                <li key={s.slug}>
+                  <Link href={`${hrefServico(s)}#duvidas`} className="inline-flex items-center gap-2 font-medium text-brand hover:underline">
+                    {s.tituloCurto} <Icon name="arrow" className="size-4" />
+                  </Link>
+                </li>
+              ))}
+            </ul>
+          </div>
           <ListaFaq itens={faq} />
         </div>
       </section>

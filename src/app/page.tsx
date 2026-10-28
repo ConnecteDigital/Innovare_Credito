@@ -6,9 +6,8 @@ import { Icon } from "@/components/Icon";
 import { Logo3D } from "@/components/Logo3D";
 import { MapaLocal } from "@/components/MapaLocal";
 import { Parceiros } from "@/components/Parceiros";
-import { ParticleField, type Forma } from "@/components/ParticleField";
+import { ParticleField } from "@/components/ParticleField";
 import { SeletorPerfil } from "@/components/SeletorPerfil";
-import { Simulador } from "@/components/Simulador";
 import { CardServico, FaixaCta, JsonLd, ListaFaq, TituloSecao } from "@/components/ui";
 import { cidades } from "@/content/cidades";
 import { etapasAtendimento } from "@/content/etapas";
@@ -18,11 +17,6 @@ import { institucional, site } from "@/content/site";
 import { faqJsonLd } from "@/lib/seo";
 import { whatsappUrl } from "@/lib/whatsapp";
 
-const formas: Forma[] = [
-  { tipo: "texto", valor: "INNOVARE" },
-  { tipo: "simbolo" },
-  { tipo: "texto", valor: "CRÉDITO" },
-];
 
 
 function TituloAnimado() {
@@ -48,10 +42,28 @@ export default function Home() {
       {/* ============================== HERO */}
       <section data-mascote="inicio" className="superficie-noite relative isolate flex min-h-[100svh] flex-col overflow-hidden pt-24 md:pt-28">
         <div className="grade-tech pointer-events-none absolute inset-0" />
-        <ParticleField formas={formas} alvoId="alvo-particulas" />
+        <ParticleField />
 
         <div className="container-site relative grid flex-1 items-center gap-6 py-8 lg:grid-cols-[1.08fr_0.92fr] lg:gap-10 lg:py-14">
-          <div id="alvo-particulas" aria-hidden="true" className="order-last h-24 sm:h-32 lg:h-[320px]" />
+          {/* foto da equipe (pedido da cliente) */}
+          <div className="relative order-last mx-auto w-full max-w-xl lg:max-w-none" data-reveal style={{ "--reveal-delay": "300ms" } as CSSProperties}>
+            <div className="absolute -inset-5 rounded-[2.5rem] bg-gradient-to-br from-brand/50 via-transparent to-laranja/40 blur-2xl" />
+            <div className="relative overflow-hidden rounded-[2rem] border border-white/15 shadow-[0_40px_90px_-30px_rgb(0_0_0/0.7)]">
+              <Image
+                src="/images/equipe-innovare.jpg"
+                alt="Equipe da Innovare Soluções em Crédito em Jaguaquara"
+                width={1280}
+                height={853}
+                priority
+                sizes="(min-width: 1024px) 45vw, 92vw"
+                className="aspect-[4/3] w-full object-cover"
+              />
+              <div className="absolute inset-x-0 bottom-0 h-1/3 bg-gradient-to-t from-noite/80 to-transparent" />
+              <div className="absolute bottom-4 left-4 flex items-center gap-2 rounded-full border border-white/20 bg-noite/60 px-4 py-2 text-sm text-white backdrop-blur-md">
+                <span className="size-2 rounded-full bg-[#1fae5b] shadow-[0_0_10px_#1fae5b]" /> Nossa equipe, pronta para te atender
+              </div>
+            </div>
+          </div>
           <div>
             <span className="eyebrow"><span className="hidden sm:inline">Soluções em crédito ·</span> Jaguaquara – BA</span>
             <div className="mt-6">
@@ -65,8 +77,8 @@ export default function Home() {
               </span>
             </p>
             <div className="mt-8 flex flex-col gap-3 sm:flex-row" data-reveal style={{ "--reveal-delay": "650ms" } as CSSProperties}>
-              <Link href="/simulador" className="btn btn-laranja">
-                <Icon name="calculator" className="size-5" /> Simular agora
+              <Link href="/servicos" className="btn btn-laranja">
+                Ver serviços <Icon name="arrow" className="size-5" />
               </Link>
               <a href={whatsappUrl()} target="_blank" rel="noopener" className="btn btn-whatsapp">
                 <Icon name="whatsapp" className="size-5" /> Falar no WhatsApp
@@ -80,7 +92,7 @@ export default function Home() {
             {[
               { icone: "pin" as const, t: "Loja física em Jaguaquara", s: `Atendimento presencial no ${site.regiao}` },
               { icone: "eye" as const, t: "Tudo explicado antes", s: "Parcela, prazo, taxa e custo total" },
-              { icone: "whatsapp" as const, t: "Todo o Brasil", s: "Atendimento rápido pelo WhatsApp" },
+              { icone: "whatsapp" as const, t: "Tudo online, todo o Brasil", s: "Atendimento rápido pelo WhatsApp" },
             ].map((b) => (
               <li key={b.t} className="flex items-center gap-3">
                 <span className="grid size-10 shrink-0 place-items-center rounded-xl border border-white/10 bg-white/5 text-laranja-300">
@@ -175,7 +187,7 @@ export default function Home() {
             <TituloSecao
               eyebrow="Serviços"
               titulo="Mais soluções para os seus planos"
-              texto="Crédito para diferentes perfis e momentos, além de consórcios e maquininhas para o seu negócio."
+              texto="Crédito para diferentes perfis e momentos, além de consórcios e microcrédito para o seu negócio."
             />
             <Link href="/servicos" className="btn btn-contorno shrink-0" data-reveal>
               Todos os serviços <Icon name="arrow" className="size-5" />
@@ -189,7 +201,7 @@ export default function Home() {
         </div>
       </section>
 
-      {/* ============================== COMO FUNCIONA + SIMULADOR */}
+      {/* ============================== COMO FUNCIONA */}
       <section className="superficie-noite relative overflow-hidden py-20 md:py-28">
         <div className="grade-tech pointer-events-none absolute inset-0" />
         <div className="container-site relative">
@@ -203,21 +215,6 @@ export default function Home() {
             <Esteira etapas={etapasAtendimento} />
           </div>
 
-          <div id="simulador" data-mascote="simulador" className="mt-24 scroll-mt-28">
-            <TituloSecao
-              tom="escuro"
-              eyebrow="Simulador"
-              titulo={
-                <>
-                  Simule em segundos e veja <span className="texto-gradiente">quanto fica a parcela</span>
-                </>
-              }
-              texto="Escolha seu perfil, o valor e o prazo. Depois é só enviar a simulação para a nossa equipe pelo WhatsApp."
-            />
-            <div className="mt-10" data-reveal>
-              <Simulador />
-            </div>
-          </div>
         </div>
       </section>
 
@@ -246,21 +243,26 @@ export default function Home() {
               Conheça a Innovare <Icon name="arrow" className="size-5" />
             </Link>
           </div>
-          <div className="relative" data-reveal>
-            <div className="absolute -inset-4 rounded-[2.5rem] bg-gradient-to-tr from-laranja/25 via-transparent to-brand/30 blur-2xl" />
-            <div className="relative overflow-hidden rounded-[2rem] border border-white shadow-[0_30px_80px_-30px_rgb(36_78_164/0.55)]">
-              <Image
-                src="/images/equipe-innovare.jpg"
-                alt="Equipe da Innovare Soluções em Crédito"
-                width={1280}
-                height={853}
-                sizes="(min-width: 1024px) 50vw, 100vw"
-                className="aspect-[4/3] w-full object-cover"
-              />
-            </div>
-            <div className="absolute -bottom-6 left-6 rounded-2xl bg-marinho px-5 py-4 text-white shadow-xl sm:left-auto sm:-right-4">
-              <p className="text-xs tracking-[0.14em] text-laranja-300 uppercase">Nossa missão</p>
-              <p className="mt-1 max-w-[16rem] text-sm leading-snug">Facilitar o acesso ao crédito com transparência e responsabilidade.</p>
+          <div className="superficie-noite relative overflow-hidden rounded-[2rem] p-7 sm:p-9" data-reveal>
+            <div className="grade-tech pointer-events-none absolute inset-0 opacity-70" />
+            <div className="relative space-y-7">
+              {[
+                { t: "Missão", x: institucional.missao, i: "target" as const },
+                { t: "Visão", x: institucional.visao, i: "eye" as const },
+              ].map((b) => (
+                <div key={b.t} className="flex gap-4">
+                  <span className="grid size-12 shrink-0 place-items-center rounded-2xl bg-laranja text-white">
+                    <Icon name={b.i} />
+                  </span>
+                  <div>
+                    <h3 className="text-xl font-semibold text-white">{b.t}</h3>
+                    <p className="mt-1.5 leading-relaxed text-ceu">{b.x}</p>
+                  </div>
+                </div>
+              ))}
+              <p className="border-t border-white/10 pt-5 text-sm text-ceu">
+                Correspondente bancário · Seguimos as diretrizes do Banco Central do Brasil (BACEN)
+              </p>
             </div>
           </div>
         </div>

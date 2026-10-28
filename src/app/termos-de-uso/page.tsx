@@ -25,9 +25,9 @@ export default function TermosPage() {
             <p>Ao utilizar este site, você concorda com as condições abaixo.</p>
             <h2>Sobre a Innovare</h2>
             <p>{avisoLegal}</p>
-            <h2>Simulações</h2>
+            <h2>Simulações e condições</h2>
             <p>
-              As simulações apresentadas no site são estimativas ilustrativas e não constituem oferta, proposta ou garantia de
+              As simulações são feitas pela nossa equipe no atendimento, sem compromisso, e não constituem garantia de
               aprovação. Valores, taxas, prazos e o Custo Efetivo Total (CET) dependem da análise de crédito e das condições de
               cada instituição financeira, e são informados antes da contratação.
             </p>

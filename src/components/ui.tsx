@@ -1,7 +1,7 @@
 import Link from "next/link";
 import type { CSSProperties, ReactNode } from "react";
 import { Icon } from "./Icon";
-import { hrefServico, type Faq, type Servico } from "@/content/servicos";
+import { hrefServico, type Faq, type FaqGrupo, type Servico } from "@/content/servicos";
 import { whatsappUrl } from "@/lib/whatsapp";
 
 export function JsonLd({ data }: { data: object | object[] }) {
@@ -78,6 +78,33 @@ export function ListaFaq({ itens, tom = "claro" }: { itens: Faq[]; tom?: "claro"
   );
 }
 
+/** FAQ dividido por tema: cada grupo com título e contador; grupos sem título viram lista simples. */
+export function GruposFaq({ grupos, nota }: { grupos: FaqGrupo[]; nota?: string }) {
+  return (
+    <div className="space-y-10">
+      {grupos.map((g, i) => (
+        <div key={g.titulo || i}>
+          {g.titulo && (
+            <div className="mb-4 flex items-baseline justify-between gap-4 border-b border-tinta/10 pb-2" data-reveal>
+              <h3 className="text-lg font-semibold text-tinta">{g.titulo}</h3>
+              <span className="shrink-0 text-sm text-ardosia">
+                {g.itens.length} {g.itens.length === 1 ? "pergunta" : "perguntas"}
+              </span>
+            </div>
+          )}
+          <ListaFaq itens={g.itens} />
+        </div>
+      ))}
+      {nota && (
+        <div className="flex gap-4 rounded-2xl border border-laranja/40 bg-laranja/8 p-5" data-reveal>
+          <Icon name="spark" className="mt-0.5 size-6 shrink-0 text-laranja" />
+          <p className="leading-relaxed font-medium text-tinta">{nota}</p>
+        </div>
+      )}
+    </div>
+  );
+}
+
 export function FaixaCta({ titulo, texto, mensagem }: { titulo?: string; texto?: string; mensagem?: string }) {
   return (
     <section data-mascote="cta" className="py-16 md:py-24">
@@ -92,15 +119,15 @@ export function FaixaCta({ titulo, texto, mensagem }: { titulo?: string; texto?:
             <div className="max-w-2xl">
               <h2 className="text-3xl leading-tight font-semibold sm:text-4xl">{titulo ?? "Vamos encontrar a melhor opção para você?"}</h2>
               <p className="mt-3 text-lg text-white/90">
-                {texto ?? "Fale com a nossa equipe pelo WhatsApp. Explicamos tudo antes de você decidir, sem compromisso."}
+                {texto ?? "Fale com a nossa equipe pelo WhatsApp e peça uma simulação sem compromisso. Explicamos tudo antes de você decidir."}
               </p>
             </div>
             <div className="flex flex-col gap-3 sm:flex-row">
               <a href={whatsappUrl(mensagem)} target="_blank" rel="noopener" className="btn bg-white text-laranja-600 shadow-lg">
                 <Icon name="whatsapp" className="size-5" /> Falar no WhatsApp
               </a>
-              <Link href="/simulador" className="btn border border-white/50 text-white hover:bg-white/10">
-                <Icon name="calculator" className="size-5" /> Simular
+              <Link href="/servicos" className="btn border border-white/50 text-white hover:bg-white/10">
+                Ver serviços <Icon name="arrow" className="size-5" />
               </Link>
             </div>
           </div>

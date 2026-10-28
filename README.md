@@ -30,9 +30,9 @@ Todo o texto está em `src/content/`. As páginas são geradas a partir desses a
 | `site.ts` | Dados da empresa, WhatsApp, endereço, região, missão/visão/valores, aviso legal |
 | `servicos.ts` | Os 11 serviços: textos, público, passo a passo, documentos, FAQ |
 | `cidades.ts` | Páginas de cidade (texto único por cidade) |
-| `simulador.ts` | **Taxas ilustrativas** do simulador |
-| `parceiros.ts` | **Lista provisória** de instituições parceiras |
-| `faq.ts` | Perguntas frequentes gerais |
+| `parceiros.ts` | Instituições parceiras (nomes; logos opcionais em `/public/parceiros`) |
+| `faq.ts` | Perguntas frequentes gerais (página /faq) |
+| `faqs.ts` | FAQ por serviço, agrupado por tema (enviado pela cliente) |
 
 **Nova cidade:** copie um item de `cidades.ts`, troque o slug e escreva textos próprios. A página, o sitemap e
 o schema são criados automaticamente. Não reaproveite o texto de outra cidade, porque o Google penaliza páginas duplicadas.
@@ -40,12 +40,12 @@ o schema são criados automaticamente. Não reaproveite o texto de outra cidade,
 ## Mapa do site
 
 ```
-/                                  Home (partículas, perfil, serviços, esteira, simulador)
+/                                  Home (foto da equipe, perfil, serviços, esteira, parceiros)
 /consignado                        Página-destaque do consignado
 /consignado/{inss|servidores-publicos|portabilidade-refinanciamento}
-/servicos  /servicos/{slug}        8 serviços
+/servicos  /servicos/{slug}        7 serviços (inclui Microcrédito Itaú, atendimento regional)
 /cidades   /cidades/{slug}         Jaguaquara, Entroncamento, Itiruçu, Itaquara, Jequié
-/simulador  /sobre  /contato  /faq  /politica-de-privacidade  /termos-de-uso
+/sobre  /contato  /faq  /politica-de-privacidade  /termos-de-uso
 /sitemap.xml  /robots.txt
 ```
 
@@ -53,8 +53,9 @@ o schema são criados automaticamente. Não reaproveite o texto de outra cidade,
 
 - [ ] **Logo oficial em vetor.** A atual foi vetorizada a partir de um JPG (`public/brand/`).
 - [x] **Região:** Vale do Jiquiriçá (confirmado pela agência).
-- [ ] Taxas e prazos reais do simulador (`simulador.ts`, `provisorio: true`).
-- [ ] Bancos e promotoras parceiros (`parceiros.ts`, `provisorio: true`).
+- [x] Simulador removido a pedido da cliente.
+- [x] Parceiros: Itaú, C6, BRB, Facta, Banco do Brasil, Rodobens, BMG, PAN, iCred (faltam os logos, opcional).
+- [ ] Revisão das respostas do FAQ pela cliente (`src/content/faqs.ts`).
 - [ ] CEP, horário de funcionamento, Instagram e Facebook (`site.ts`).
 - [ ] Números reais para contadores (anos, clientes), se o cliente quiser exibir.
 - [ ] Mais fotos: fachada e interior da loja.

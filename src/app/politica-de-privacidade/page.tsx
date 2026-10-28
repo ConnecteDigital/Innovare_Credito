@@ -30,9 +30,9 @@ export default function PrivacidadePage() {
             </p>
             <h2>Quais dados coletamos</h2>
             <p>
-              Este site não possui cadastro nem armazena formulários. Quando você usa o formulário de contato ou o simulador e
+              Este site não possui cadastro nem armazena formulários. Quando você usa o formulário de contato e
               escolhe falar conosco, a mensagem é aberta no WhatsApp, e os dados que você decidir enviar (como nome, cidade,
-              serviço de interesse e informações da simulação) passam a ser tratados no nosso atendimento.
+              serviço de interesse) passam a ser tratados no nosso atendimento.
             </p>
             <p>
               Durante o atendimento, podemos solicitar documentos e informações necessários para consultar opções de crédito,
